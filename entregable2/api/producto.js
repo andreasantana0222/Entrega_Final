@@ -20,15 +20,20 @@ class Productos {
 
    save(objeto){
      console.log('save');
-     const productos =  this.read();
+     console.log((new Date(Date.now())).toLocaleString());
+     const productos =  this.read() || [];
 //4. Un producto dispondrá de los siguientes campos: id, timestamp, nombre, descripcion,
 // código, foto (url), precio, stock.
-     let id=productos.length+1;
+     let id=productos.length+1 || 1;
      let item={
-       title:objeto.title,
-       price:objeto.price,
-       thumbnail:objeto.thumbnail,
-       id:id
+       id:id,
+       timestamp:(new Date(Date.now())).toLocaleString(),
+       nombre:objeto.nombre,
+       descripcion:objeto.descripcion,
+       codigo:objeto.codigo,
+       foto:objeto.foto,
+       precio:objeto.precio,
+       stock:objeto.stock
      }
      productos.push(item);
       fs.writeFileSync(archivo,JSON.stringify(productos,null,'\t'));
@@ -37,12 +42,16 @@ class Productos {
 
    update(id,objeto){
      const productos =  this.read();
-     let idProducto=id-1;
+     let idProducto=id-1 || 1;
      let item={
-       title:objeto.title,
-       price:objeto.price,
-       thumbnail:objeto.thumbnail,
-       id:id
+       id:id,
+       timestamp:(new Date(Date.now())).toLocaleString(),
+       nombre:objeto.nombre,
+       descripcion:objeto.descripcion,
+       codigo:objeto.codigo,
+       foto:objeto.foto,
+       precio:objeto.precio,
+       stock:objeto.stock
      }
      productos[idProducto]=item;
      fs.writeFileSync(archivo,JSON.stringify(productos,null,'\t'));
@@ -51,7 +60,7 @@ class Productos {
    }
 
    delete(id){
-     const productos =  this.read();
+     const productos =  this.read() || [];
 
 
        for (var i =0; i < productos.length; i++){

@@ -1,32 +1,72 @@
 [
 	{
-		"title": "Escuadra",
-		"price": 123.45,
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-		"id": 1
+		"id": 1,
+		"timestamp": "1/8/2021 19:04:18",
+		"nombre": "Colchón Chocolate",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
 	},
 	{
-		"title": "Calculadora",
-		"price": 234.56,
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-		"id": 2
+		"id": 2,
+		"timestamp": "1/8/2021 19:04:18",
+		"nombre": "Colchón Verde",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
 	},
 	{
-		"title": "Globo Terráqueo",
-		"price": 345.67,
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-		"id": 3
+		"id": 3,
+		"timestamp": "1/8/2021 19:04:18",
+		"nombre": "Colchón Rubí",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
 	},
 	{
-		"title": "Caja",
-		"price": "100.35",
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-		"id": 4
+		"id": 4,
+		"timestamp": "1/8/2021 19:04:18",
+		"nombre": "Colchón Naval",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
 	},
 	{
-		"title": "Borrador",
-		"price": "100.35",
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-		"id": 5
+		"id": 5,
+		"timestamp": "1/8/2021 19:04:18",
+		"nombre": "Colchón Chocolate",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
+	},
+	{
+		"id": 6,
+		"timestamp": "1/8/2021 19:38:15",
+		"nombre": "Colchón Chocolate",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 100
+	},
+	{
+		"id": "7",
+		"timestamp": "1/8/2021 20:48:27",
+		"nombre": "Colchón Chocolate",
+		"descripcion": "Colchón de lona relleno de copos de gomaespuma",
+		"codigo": 123456,
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"precio": 345.67,
+		"stock": 90
 	}
 ]

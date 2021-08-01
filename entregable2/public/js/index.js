@@ -4,15 +4,21 @@ const inputTitle = document.querySelector('#input-title')
 const inputPrice = document.querySelector('#input-price')
 const inputImg = document.querySelector('#input-img')
 
+//4. Un producto dispondrá de los siguientes campos: id, timestamp, nombre, descripcion,
+// código, foto (url), precio, stock
 const template= Handlebars.compile(`
   <h1>Vista de Productos</h1>
               <br>
               {{#if hayProductos}}
                   <div class="table-responsive">
                       <table class="table table-dark">
-                          <tr> <th>Nombre</th> <th>Precio</th> <th>Foto</th></tr>
+                          <tr> <th>ID</th> <th>Fecha</th> <th>Nombre</th> <th>Descripci&oacute;n</th> <th>C&oacute;digo</th>
+                           <th>Precio</th> <th>Stock</th> <th>Foto</th></tr>
                           {{#each hayProductos}}
-                              <tr> <td>{{this.title}}</td> <td>$ {{this.price}}</td> <td><img width="50" src={{this.thumbnail}} alt="not found"></td> </tr>
+                              <tr> <td>{{this.id}}</td> <td> {{this.timestamp}}</td> <td> {{this.nombre}}</td>
+                              <td>{{this.descripcion}}</td> <td> {{this.codigo}}</td> <td>$ {{this.precio}}</td>
+                              <td>{{this.stock}}</td>
+                              <td><img width="50" src={{this.foto}} alt="not found"></td> </tr>
                           {{/each}}
                       </table>
                   </div>
@@ -28,9 +34,11 @@ const template= Handlebars.compile(`
                 {{#if hayCarrito}}
                     <div class="table-responsive">
                         <table class="table table-dark">
-                            <tr> <th>Nombre</th> <th>Precio</th> <th>Foto</th></tr>
+                            <tr> <th>ID</th> <th>Fecha</th> <th>Producto-ID</th> <th>Producto-Nombre</th> <th>Foto</th></tr></tr>
                             {{#each hayCarrito}}
-                                <tr> <td>{{this.title}}</td> <td>$ {{this.price}}</td> <td><img width="50" src={{this.thumbnail}} alt="not found"></td> </tr>
+                                <tr> <td>{{this.id}}</td> <td> {{this.timestamp}}</td>  
+                                <td> {{this.producto.id}}</td> <td> {{this.producto.nombre}}</td>
+                                <td><img width="50" src={{this.producto.foto}} alt="not found"></td> </tr>
                             {{/each}}
                         </table>
                     </div>

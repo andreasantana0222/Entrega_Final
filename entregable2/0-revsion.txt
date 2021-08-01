@@ -15,23 +15,29 @@
     OK
     b. '/agregar/:id_producto' : Para incorporar productos al carrito por su id de producto
     (disponible para usuarios y administradores)
-    REVISAR
+    OK
     c. '/borrar/:id' : Eliminar un producto del carrito por su id de carrito (disponible para
     usuarios y administradores)
-    REVISAR
-    
+    OK
+
 3. Crear una variable booleana administrador, cuyo valor configuraremos más adelante con el
 sistema de login. Según su valor (true ó false) me permitirá alcanzar o no las rutas indicadas.
 En el caso de recibir un request a una ruta no permitida por el perfil, devolver un objeto de
 error. Ejemplo: { error : -1, descripcion: ruta 'x' método 'y' no autorizada}
+OK
 
 4. Un producto dispondrá de los siguientes campos: id, timestamp, nombre, descripcion,
 código, foto (url), precio, stock.
+OK
 
 5. El carrito de compras tendrá la siguiente estructura:
 id, timestamp(carrito), producto: { id, timestamp(producto), nombre, descripcion, código, foto
 (url), precio, stock }
+OK
 
 6. El timestamp puede implementarse con Date.now()
+OK
 
-7. Comenzar a trabajar con el listado de produc
+7. Comenzar a trabajar con el listado de productos y el carrito de compras en memoria del
+servidor, luego persistirlos en el filesystem.
+OK

@@ -3,6 +3,7 @@ const router = express.Router();
 const productos = require('../api/producto');
 
 
+let administrador= () => true;
 
 /// 1-a. '/listar/:id?' : Me permite listar todos los productos disponibles ó un producto por su id
 /// (disponible para usuarios y administradores)
@@ -42,20 +43,27 @@ router.get('/productos/listar/:id', async (req, res) => {
   }
 });
 
+
+
 /// 1-b. '/agregar' : Para incorporar productos al listado (disponible para administradores)
 router.post('/productos/agregar', async (req, res) => {
 
+
+if (administrador()){
   try {
     let objeto=req.body;
     console.log('agregar');
-    productos.save(objeto);
-
+      res.type('json').send(JSON.stringify(productos.save(objeto), null, 2) + '\n');
 
   } catch (e) {
 
     console.error({error : 'error al agregar'})
     res.status(500).send(JSON.stringify({error : 'error al agregar'}));
   }
+}else{
+  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
+}
+
 
 });
 
@@ -63,6 +71,7 @@ router.post('/productos/agregar', async (req, res) => {
 /// 1-c. '/actualizar/:id' : Actualiza un producto por su id (disponible para administradores)
 router.put('/productos/actualizar/:id', async (req, res) => {
 
+if (administrador()){
   try {
 
     if (req.params.id>productos.read().length || req.params.id<1){
@@ -76,11 +85,16 @@ router.put('/productos/actualizar/:id', async (req, res) => {
     console.error({error : 'producto no encontrado'})
     res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
   }
+
+}else{
+  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
+}
   });
 
 /// 1-d. '/borrar/:id' : Borra un producto por su id (disponible para administradores)
   router.delete('/productos/borrar/:id', async (req, res) => {
 
+if (administrador()){
     try {
       //console.log(`id ${req.params.id} `);
       //if (req.params.id>controller.read().length || req.params.id<1){
@@ -95,6 +109,10 @@ router.put('/productos/actualizar/:id', async (req, res) => {
       console.error({error : 'producto no encontrado'})
       res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
     }
+
+  }else{
+    res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
+  }
     });
 
 
