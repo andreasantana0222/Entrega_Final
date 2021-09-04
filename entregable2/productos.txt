@@ -68,5 +68,15 @@
 		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
 		"precio": 345.67,
 		"stock": 90
+	},
+	{
+		"id": 8,
+		"timestamp": "4/9/2021 17:44:47",
+		"nombre": "Nuevo",
+		"descripcion": "I develop",
+		"codigo": "600556",
+		"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+		"precio": "100.35",
+		"stock": "100"
 	}
 ]

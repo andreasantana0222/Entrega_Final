@@ -84,13 +84,11 @@ io.on('connection', (socket) => {
     socket.emit('messages', chat.read());
 
     socket.on('guardar', (data) => {
-        productos.save(data);
-        console.log(productos.read());
+        productos.save(data);        
         io.sockets.emit('actualizar', productos.read(), carrito.read());
     });
     socket.on('new-message',function(data){
-      chat.save(data);
-      console.log(chat.read());
+      chat.save(data);      
       io.sockets.emit('messages', chat.read());
     });
 });

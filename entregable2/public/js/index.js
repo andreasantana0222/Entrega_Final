@@ -1,8 +1,12 @@
 const socketio = io.connect();
-const form = document.querySelector('#formulario')
-const inputTitle = document.querySelector('#input-title')
-const inputPrice = document.querySelector('#input-price')
-const inputImg = document.querySelector('#input-img')
+const form = document.querySelector('#formulario');
+const inputTitle = document.querySelector('#input-title');
+const inputDescription = document.querySelector('#input-description');
+const inputCode = document.querySelector('#input-code');
+const inputPrice = document.querySelector('#input-price');
+const inputImg = document.querySelector('#input-img');
+const inputStock = document.querySelector('#input-stock');
+
 
 //4. Un producto dispondrá de los siguientes campos: id, timestamp, nombre, descripcion,
 // código, foto (url), precio, stock
@@ -49,25 +53,39 @@ const template= Handlebars.compile(`
     `);
 
   form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const title = inputTitle.value.trim()
-      const price = inputPrice.value.trim()
-      const thumbnail = inputImg.value.trim()
+      e.preventDefault();
+      const title = inputTitle.value.trim();
+      const description=inputDescription.value.trim();
+      const code=inputCode.value.trim();;
+      const price = inputPrice.value.trim();
+      const thumbnail = inputImg.value.trim();
+      const stock=inputStock.value.trim();
+
+  
 
       if (title.length < 1) {return}
+      if (description.length < 1) {return}
+      if (code.length < 1) {return}
       if (price.length < 1) {return}
       if (thumbnail.length < 1) {return}
+      if (stock.length < 1) {return}
 
       // envio el objeto con socket
       socketio.emit('guardar', {
-          title: title,
-          price: price,
-          thumbnail: thumbnail
+        nombre: title,
+        descripcion:description,
+        codigo:code,
+        foto: thumbnail,
+        precio: price,
+        stock:stock          
       })
 
-      inputTitle.value = ''
-      inputPrice.value = ''
-      inputImg.value = ''
+      inputTitle.value = '';
+      inputDescription.value = '';
+      inputCode.value = '';
+      inputPrice.value = '';      
+      inputImg.value = '';
+      inputStock.value = '';
   })
 
   // actualizo template con la data del server

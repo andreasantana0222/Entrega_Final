@@ -1,73 +1,57 @@
-let archivo='carrito.txt';
-const fs=require ('fs');
+const factory = require("../persistencia/factory");
+let instancia = factory.getPersistencia("archivo", "carrito");
 
 class Carrito {
-    constructor() {
-        // incializar variables
-        this.listaProductos=[{}];
-        this.archivo=archivo;
-    }
+  constructor() {
+    this.listaProductos = [{}];
+  }
 
-    read(){
-      //console.log('read');
-     const contenido = fs.readFileSync(this.archivo, 'utf-8');
-     this.listaProductos=JSON.parse(contenido);
-     //console.log(JSON.parse(contenido));
-     //Envio objeto
-     return JSON.parse(contenido);
+  read() {
+    return instancia.read();
+  }
 
-   }
+  save(objeto) {
+    const productos = this.read() || [];
 
-   save(objeto){
-     //console.log('save');
-     const productos =  this.read() || [] ;
-// 5. El carrito de compras tendrá la siguiente estructura:
-//id, timestamp(carrito), producto: { id, timestamp(producto), nombre, descripcion, código,
-//foto(url), precio, stock }
+    let id = productos.length + 1 || 1;
 
-     let id=productos.length+1 || 1;
-     //console.log(id);
-     let item={
-       id:id,
-       timestamp:(new Date(Date.now())).toLocaleString(),
-       producto:objeto
-     }
-     //console.log(item);
-     productos.push(item);
-      fs.writeFileSync(archivo,JSON.stringify(productos,null,'\t'));
-     return item;
-   }
+    let item = {
+      id: id,
+      timestamp: new Date(Date.now()).toLocaleString(),
+      producto: objeto,
+    };
 
-   update(id,objeto){
-     const productos =  this.read() || [];
-     let idProducto=id-1 || 1;
-     let item={
-       id:id,
-       timestamp:(new Date(Date.now())).toLocaleString(),
-       producto:objeto
-     }
-
-     productos[idProducto]=item;
-     fs.writeFileSync(archivo,JSON.stringify(productos,null,'\t'));
+    productos.push(item);
+    instancia.save(productos);
     return item;
+  }
 
-   }
+  update(id, objeto) {
+    const productos = this.read() || [];
+    let idProducto = id - 1 || 1;
+    let item = {
+      id: id,
+      timestamp: new Date(Date.now()).toLocaleString(),
+      producto: objeto,
+    };
 
-   delete(id){
-     const productos =  this.read() || [];
+    productos[idProducto] = item;
+    instancia.save(productos);
+    return item;
+  }
 
+  delete(id) {
+    const productos = this.read() || [];
 
-       for (var i =0; i < productos.length; i++){
-
-          if (productos[i].id == id) {
-            let item=productos[i];
-              productos.splice(i,1);
-              fs.writeFileSync(archivo,JSON.stringify(productos,null,'\t'));
-               return item;
-            }
-          }
-        }
-
+    for (var i = 0; i < productos.length; i++) {
+      if (productos[i].id == id) {
+        let item = productos[i];
+        productos.splice(i, 1);
+        instancia.save(productos);
+        return item;
+      }
+    }
+  }
 }
 
 module.exports = new Carrito();

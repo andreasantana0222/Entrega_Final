@@ -1,35 +1,21 @@
-let archivo='chat.txt';
-const fs=require ('fs');
+const factory = require("../persistencia/factory");
+let instancia = factory.getPersistencia("archivo", "chat");
 
 class Chat {
     constructor() {
-        // incializar variables
-        this.archivo=archivo;
+
     }
 
     read(){
-      //console.log('read');
-     const contenido = fs.readFileSync(this.archivo, 'utf-8');
-     this.listaProductos=JSON.parse(contenido);
-     //console.log(JSON.parse(contenido));
-     //Envio objeto
-     return JSON.parse(contenido);
+      return instancia.read();
 
    }
 
-   save(objeto){
-     console.log('save');
+   save(objeto){    
 
      const contenido =  this.read();
-     //const contenido =  [];
-
-     //console.log('read');
-     //console.log(contenido);
-     console.log('objeto');
-     console.log(objeto);
-     console.log('push');
      contenido.push(objeto);
-    console.log(contenido);
+    
 
      let item={
        author:objeto.author,
@@ -38,7 +24,7 @@ class Chat {
        datetime:(new Date(Date.now())).toLocaleString()
      }
 
-      fs.writeFileSync(archivo,JSON.stringify(contenido,null,'\t'));
+     instancia.save(contenido);
      return item;
    }
 
