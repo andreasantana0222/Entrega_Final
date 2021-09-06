@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-//const url="mongodb+srv://root:admin@cluster0.3lx2s.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
 const url=`mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.3lx2s.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 
