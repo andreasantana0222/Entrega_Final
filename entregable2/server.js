@@ -17,6 +17,11 @@ const chat = require('./api/chat');
 // Inicializamos la librería handlebars
 const handlebars = require('express-handlebars');
 
+// Librería DotEnv
+const dotenv = require('dotenv');   
+// obtengo la config del .env
+dotenv.config();
+
 
 
 // creo una app de tipo express
@@ -61,8 +66,9 @@ app.get('/', (req, res) => {
 
 
 
-/// obtengo el puerto del enviroment o lo seteo por defecto
+// obtengo el puerto del enviroment o lo seteo por defecto
 const PORT = process.env.PORT || 8080;
+//const PORT = process.env.PORT || config.PORT;
 
 // pongo a escuchar el servidor en el puerto indicado
 const server = http.listen(PORT, () => {
