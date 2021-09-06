@@ -23,7 +23,7 @@ function addMessage(e){
       text: document.getElementById('texto').value,
       datetime: (new Date(Date.now())).toLocaleString()
     };
-    console.log(mensaje);
+    
     socket.emit('new-message',mensaje);
     return false;
 }

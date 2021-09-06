@@ -1,17 +1,17 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("archivo", "producto");
+let instancia = factory.getPersistencia("mongo-atlas", "producto");
 
 class Productos {
   constructor() {
     this.listaProductos = [{}];
   }
 
-  read() {
-    return instancia.read();
+  async read() {
+    return await instancia.read();
   }
 
-  save(objeto) {
-    const productos = this.read() || [];
+  async save(objeto) {
+    const productos = await this.read() || [];
 
     let id = productos.length + 1 || 1;
     let item = {
@@ -24,12 +24,12 @@ class Productos {
       precio: objeto.precio,
       stock: objeto.stock,
     };
-    productos.push(item);
-    instancia.save(productos);
+    
+    await instancia.save(item);
     return item;
   }
 
-  update(id, objeto) {
+  async update(id, objeto) {
     const productos = this.read();
     let idProducto = id - 1 || 1;
     let item = {
@@ -43,21 +43,20 @@ class Productos {
       stock: objeto.stock,
     };
     productos[idProducto] = item;
-    instancia.save(productos);
+    await instancia.update(objeto);
     return item;
   }
 
-  delete(id) {
+  async delete(id) {
+    console.log('delete api');
     const productos = this.read() || [];
 
-    for (var i = 0; i < productos.length; i++) {
-      if (productos[i].id == id) {
-        let item = productos[i];
-        productos.splice(i, 1);
-        instancia.save(productos);
-        return item;
-      }
+    if (productos.length>0){
+      let item=productos.find(x=>x.id==id);
+      await instancia.delete(item);
+      return item;
     }
+
   }
 }
 

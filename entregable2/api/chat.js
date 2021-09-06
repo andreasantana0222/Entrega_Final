@@ -1,30 +1,26 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("archivo", "chat");
+let instancia = factory.getPersistencia("mongo-atlas", "chat");
 
 class Chat {
     constructor() {
 
     }
 
-    read(){
-      return instancia.read();
+    async read(){
+      return await instancia.read();
 
    }
 
-   save(objeto){    
+   async save(objeto){    
 
-     const contenido =  this.read();
-     contenido.push(objeto);
-    
+    let item={
+      author:objeto.author,
+      text:objeto.text,
+      email:objeto.email,
+      datetime:(new Date(Date.now())).toLocaleString()
+    }
 
-     let item={
-       author:objeto.author,
-       text:objeto.text,
-       email:objeto.email,
-       datetime:(new Date(Date.now())).toLocaleString()
-     }
-
-     instancia.save(contenido);
+     await instancia.save(item);
      return item;
    }
 

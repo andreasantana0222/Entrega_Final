@@ -1,5 +1,6 @@
 const CDAO = require('../dao');
-let archivo=`././chat.txt`;
+//TO DO cambiar a path relativo
+let archivo="C:/Users/chris/OneDrive/Documents/Malena/Coder House/Desafio Final/entregable2/persistencia/files/chat.txt";
 const fs=require ('fs');
 
 
@@ -18,9 +19,12 @@ class ArchivoChat {
 
    }
 
-   save(mensajes){
+   save(objeto){
+    const contenido =  this.read();
+    contenido.push(objeto);   
 
-      fs.writeFileSync(archivo,JSON.stringify(mensajes,null,'\t'));
+    
+      fs.writeFileSync(archivo,JSON.stringify(contenido,null,'\t'));
      return false;
    }
 
