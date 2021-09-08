@@ -67,7 +67,7 @@ app.get('/', (req, res) => {
 
 
 // obtengo el puerto del enviroment o lo seteo por defecto
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 //const PORT = process.env.PORT || config.PORT;
 
 // pongo a escuchar el servidor en el puerto indicado

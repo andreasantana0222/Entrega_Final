@@ -1,5 +1,6 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("mongo-atlas", "carrito");
+let instancia = factory.getPersistencia("mysql", "carrito");
+
 
 class Carrito {
   constructor() {
@@ -14,10 +15,10 @@ class Carrito {
     
     const productos = this.read() || [];
 
-    let id = productos.length + 1 || 1;
+    let idCarrito = productos.length + 1 || 1;
 
     let item = {
-      id: id,
+      id: idCarrito,
       timestamp: new Date(Date.now()).toLocaleString(),
       producto: objeto.producto,
     };
@@ -26,11 +27,11 @@ class Carrito {
     return item;
   }
 
-  async update(id, objeto) {
+  async update(idCarrito, objeto) {
     const productos = this.read() || [];
     
     let item = {
-      id: id,
+      id: idCarrito,
       timestamp: new Date(Date.now()).toLocaleString(),
       producto: objeto,
     };

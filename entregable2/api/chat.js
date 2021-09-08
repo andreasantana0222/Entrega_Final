@@ -1,5 +1,5 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("mongo-atlas", "chat");
+let instancia = factory.getPersistencia("firebase", "chat");
 
 class Chat {
     constructor() {
@@ -28,3 +28,5 @@ class Chat {
 }
 
 module.exports = new Chat();
+
+

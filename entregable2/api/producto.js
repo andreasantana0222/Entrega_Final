@@ -1,5 +1,5 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("mongo-atlas", "producto");
+let instancia = factory.getPersistencia("firebase", "producto");
 
 class Productos {
   constructor() {

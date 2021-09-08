@@ -1,18 +1,14 @@
-const mongoose = require("mongoose");
-
 const mensaje = require("../../src/mongo-local/models/carrito");
-const config = require("../../src/mongo-local/config/configCarrito.json");
+const connection = require("../../src/mongo-local/config/conn");
 
-// conexion a la base de datos
-await mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log('conexion a la base de datos realizada!');
+//TO DO no lee el carrito
 
 class Carrito {
     constructor() {}
   
   //TO DO no lee en Postman
     async read() {
-      let contenido = await mensaje.find({});
+      let contenido = await mensaje.find();
       return contenido;
     }
   

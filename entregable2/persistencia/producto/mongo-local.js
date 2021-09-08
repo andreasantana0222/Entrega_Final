@@ -1,11 +1,9 @@
-const mongoose = require("mongoose");
+
 
 const mensaje = require("../../src/mongo-local/models/producto");
-const config = require("../../src/mongo-local/config/configProducto.json");
 
-// conexion a la base de datos
-await mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log('conexion a la base de datos realizada!');
+const connection = require("../../src/mongo-local/config/conn");
+
 
 class Producto {
   constructor() {}
