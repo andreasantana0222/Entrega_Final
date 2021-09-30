@@ -1,4 +1,5 @@
 const socketio = io.connect();
+
 const form = document.querySelector('#formulario');
 const inputTitle = document.querySelector('#input-title');
 const inputDescription = document.querySelector('#input-description');
@@ -7,9 +8,15 @@ const inputPrice = document.querySelector('#input-price');
 const inputImg = document.querySelector('#input-img');
 const inputStock = document.querySelector('#input-stock');
 
+const filtro = document.querySelector('#filtro-formulario');
+const filtroTitle = document.querySelector('#filtro-title');
+const filtroCode = document.querySelector('#filtro-code');
+const filtroPriceMin = document.querySelector('#filtro-price-min');
+const filtroPriceMax = document.querySelector('#filtro-price-max');
+const filtroStockMin = document.querySelector('#filtro-stock-min');
+const filtroStockMax = document.querySelector('#filtro-stock-max');
 
-//4. Un producto dispondrá de los siguientes campos: id, timestamp, nombre, descripcion,
-// código, foto (url), precio, stock
+
 const template= Handlebars.compile(`
   <h1>Vista de Productos</h1>
               <br>
@@ -52,16 +59,15 @@ const template= Handlebars.compile(`
             <a href="/" class="btn btn-info m-3">Volver</a>
     `);
 
+    //Formulario de Ingreso de Productos
   form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const title = inputTitle.value.trim();
-      const description=inputDescription.value.trim();
-      const code=inputCode.value.trim();;
-      const price = inputPrice.value.trim();
-      const thumbnail = inputImg.value.trim();
-      const stock=inputStock.value.trim();
-
-  
+    const title = inputTitle.value.trim();
+    const description=inputDescription.value.trim();
+    const code=inputCode.value.trim();;
+    const price = inputPrice.value.trim();
+    const thumbnail = inputImg.value.trim();
+    const stock=inputStock.value.trim();
 
       if (title.length < 1) {return}
       if (description.length < 1) {return}
@@ -87,6 +93,45 @@ const template= Handlebars.compile(`
       inputImg.value = '';
       inputStock.value = '';
   })
+
+//Formulario de filtro de productos
+  filtro.addEventListener('submit', (e) => {
+      
+    e.preventDefault();
+    const fTitle = filtroTitle.value.trim();
+    const fCode = filtroCode.value.trim();
+    const fPriceMin = filtroPriceMin.value.trim();;
+    const fPriceMax = filtroPriceMax.value.trim();
+    const fStockMin = filtroStockMin.value.trim();
+    const fStockMax = filtroStockMax.value.trim();
+
+
+
+    if (fTitle.length < 1) {return}
+    if (fCode.length < 1) {return}
+    if (fPriceMin.length < 1) {return}
+    if (fPriceMax.length < 1) {return}
+    if (fStockMin.length < 1) {return}
+    if (fStockMax.length < 1) {return}
+
+    // envio el objeto con socket
+    socketio.emit('filtrar', {
+      nombre: fTitle,      
+      codigo: fCode,
+      precioMin: fPriceMin,
+      precioMax: fPriceMax,
+      stockMin: fStockMin,
+      stockMax: fStockMax
+
+    })
+
+    filtroTitle.value = '';
+    filtroCode.value = '';
+    filtroPriceMin.value = '';
+    filtroPriceMax.value = '';      
+    filtroStockMin.value = '';
+    filtroStockMax.value = '';
+})
 
   // actualizo template con la data del server
   socketio.on('actualizar', (data,carrito) => {

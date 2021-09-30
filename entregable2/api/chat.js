@@ -1,5 +1,5 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("firebase", "chat");
+let instancia = factory.getPersistencia("sqlite", "chat");
 
 class Chat {
     constructor() {

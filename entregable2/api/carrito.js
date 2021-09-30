@@ -1,5 +1,5 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("mysql", "carrito");
+let instancia = factory.getPersistencia("sqlite", "carrito");
 
 
 class Carrito {

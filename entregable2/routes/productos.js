@@ -5,7 +5,7 @@ const productos = require('../api/producto');
 
 let administrador= () => true;
 
-
+// GET api/productos/listar-------------------------------------------------
 router.get('/productos/listar',async (req, res) => {
   try {
     let prods=await productos.read();
@@ -24,7 +24,7 @@ router.get('/productos/listar',async (req, res) => {
 });
 
 
-
+// GET api/productos/listar/:id-------------------------------------------------
 router.get('/productos/listar/:id', async (req, res) => {
 
   try {
@@ -44,14 +44,13 @@ router.get('/productos/listar/:id', async (req, res) => {
 
 
 
-
+// POST api/productos/agregar-------------------------------------------------
 router.post('/productos/agregar', async (req, res) => {
 
 
 if (administrador()){
   try {
     let objeto=req.body;
-    console.log('agregar');
       res.type('json').send(JSON.stringify(await productos.save(objeto), null, 2) + '\n');
 
   } catch (e) {
@@ -67,7 +66,7 @@ if (administrador()){
 });
 
 
-
+// PUT api/productos/actualizar/:id-------------------------------------------------
 router.put('/productos/actualizar/:id', async (req, res) => {
 
 if (administrador()){
@@ -90,7 +89,7 @@ if (administrador()){
 }
   });
 
-
+// DELETE api/productos/borrar/:id-------------------------------------------------
   router.delete('/productos/borrar/:id', async (req, res) => {
 
 if (administrador()){

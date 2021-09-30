@@ -85,17 +85,29 @@ const server = http.listen(PORT, () => {
 // cuando se realice la conexion, se ejecutara una sola vez
 io.on('connection', async(socket) => {
     console.log("Usuario conectado");
+
+    //Actualiza la lista de productos en index.html
     socket.emit('actualizar', await productos.read(), await carrito.read());
-    //socket.emit('messages', messages);
+
+    //Actualiza los mensajes en el index.html
     socket.emit('messages', await chat.read());
 
+    //Guarda un nuevo producto en la base de datos
     socket.on('guardar', async(data) => {
         await productos.save(data);        
         io.sockets.emit('actualizar', await productos.read(), await carrito.read());
     });
+
+    //Guarda un nuevo mensaje en la base de datos
     socket.on('new-message',async function(data){
       await chat.save(data);      
       io.sockets.emit('messages', await chat.read());
+    });
+
+    //Filtrar producto en el index.html
+    socket.on('filtrar', async(data) => {
+        await productos.filtrar(data);        
+        io.sockets.emit('actualizar', await productos.filtrado(), await carrito.read());
     });
 });
 

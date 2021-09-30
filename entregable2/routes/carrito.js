@@ -43,8 +43,7 @@ router.get('/carrito/listar/:id', async (req, res) => {
 router.post('/carrito/agregar', async (req, res) => {
 
   try {
-    let objeto=req.body;
-    console.log('guardar');   
+    let objeto=req.body;     
     
 
     res.type('json').send(JSON.stringify(await carrito.save(objeto), null, 2) + '\n');

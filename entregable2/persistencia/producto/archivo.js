@@ -29,6 +29,7 @@ class ArchivoProductos {
     this.saveFile(productos);
     return false;
   }
+
   //TO DO reemplazar producto no agregarlo
   update(objeto) {
     const productos = this.read() || [];
@@ -49,5 +50,7 @@ class ArchivoProductos {
     this.saveFile(productos);
     return false;
   }
+
+  
 }
 module.exports = new ArchivoProductos();
