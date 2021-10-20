@@ -1,0 +1,35 @@
+{
+  "name": "entregable2",
+  "version": "2.0.0",
+  "description": "Entrega dos y tres",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreasantana0222/Entrega_Final.git"
+  },
+  "author": "Andrea Santana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreasantana0222/Entrega_Final/issues"
+  },
+  "homepage": "https://github.com/andreasantana0222/Entrega_Final#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "firebase-admin": "^9.11.1",
+    "handlebars": "^4.7.7",
+    "knex": "^0.95.11",
+    "mongoose": "^6.0.4",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.2.0",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
