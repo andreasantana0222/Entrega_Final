@@ -1,5 +1,5 @@
 const factory = require("../persistencia/factory");
-let instancia = factory.getPersistencia("archivo", "chat");
+let instancia = factory.getPersistencia("mongo-local", "chat");
 
 class Chat {
     constructor() {
@@ -17,7 +17,7 @@ class Chat {
       author:objeto.author,
       text:objeto.text,
       email:objeto.email,
-      datetime:(new Date(Date.now())).toLocaleString()
+      datetime:(new Date(Date.now())).toString()
     }
 
      await instancia.save(item);

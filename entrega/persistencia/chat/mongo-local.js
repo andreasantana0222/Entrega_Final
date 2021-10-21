@@ -6,11 +6,13 @@ const connection = require("../../src/mongo-local/config/conn");
 class Chat {
     constructor() {}
   
+    //OK busca lista de mensajes
     async read() {
-      let contenido = await modelo.find();
+      let contenido = await modelo.find({});
       return contenido;
     }
   
+    //OK graba mensajes
     async save(objeto) {
       let usuarioGuardado = await modelo.create(objeto);
   
