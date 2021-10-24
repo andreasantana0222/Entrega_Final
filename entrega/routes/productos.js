@@ -9,14 +9,15 @@ let administrador= () => true;
 router.get('/productos/listar',async (req, res) => {
   try {
       let prods=await productos.read();
-      if(prods.length=0){
+
+      if(prods.length==0){
         res.type('json').send(JSON.stringify({error : 'no hay productos cargados'}, null, 2) + '\n');
       }else{
         res.type('json').send(JSON.stringify(prods, null, 2) + '\n');
       }
 
     } catch (e) {
-    console.error({error : 'no hay productos cargados'})
+    console.error({error : e})
     res.status(500).send(JSON.stringify({error : 'no hay productos cargados'}));
 
   }
@@ -27,13 +28,16 @@ router.get('/productos/listar',async (req, res) => {
 router.get('/productos/listar/:id', async (req, res) => {
 
   try {
+
+    let idProducto=req.params.id.toString();
     let prods=await productos.read();
-    if (req.params.id>prods.length || req.params.id<1){
+    let buscarProducto= await productos.readById(idProducto);    
+
+    if ((buscarProducto==null) || req.params.id<1){
       res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
-    } else{
-      let id=req.params.id-1;
-      let item=prods.findIndex(x=>x.id==id);
-      res.type('json').send(JSON.stringify(item, null, 2) + '\n');
+    } else{      
+      
+      res.type('json').send(JSON.stringify(buscarProducto, null, 2) + '\n');
     }
   } catch (e) {
     console.error({error : 'producto no encontrado'})
@@ -71,10 +75,12 @@ router.put('/productos/actualizar/:id', async (req, res) => {
 if (administrador()){
   try {
     let prods=await productos.read();
-    if (req.params.id>prods.length || req.params.id<1){
+    let id=req.params.id.toString();
+
+    if (id<1){
       res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
     } else{
-      let id=req.params.id;
+      
       let objeto=req.body;
       return res.type('json').send(JSON.stringify(await productos.update(id,objeto), null, 2) + '\n');
     }
@@ -84,7 +90,7 @@ if (administrador()){
   }
 
 }else{
-  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
+  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'actualizar' método 'put' no autorizada"}));
 }
   });
 
@@ -93,11 +99,12 @@ if (administrador()){
 
 if (administrador()){
     try {
+      let id=req.params.id.toString();
 
-      if (req.params.id<1){
+      if (id<1){
         res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
       } else{
-        let id=req.params.id;
+        
         
         return res.type('json').send(JSON.stringify(await productos.delete(id), null, 2) + '\n');
       }
@@ -107,7 +114,7 @@ if (administrador()){
     }
 
   }else{
-    res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
+    res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'borrar' método 'delete' no autorizada"}));
   }
     });
 

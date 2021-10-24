@@ -7,35 +7,42 @@ const connection = require("../../src/mongo-local/config/conn");
 
 class Producto {
   constructor() {}
-//TO DO no lee en Postman
+
+//OK busca lista de productos
   async read() {
     let contenido = await modelo.find({});
     return contenido;
   }
 
+  //OK busca producto
+  async readById(id) {
+    let unProducto = await modelo.findById(id);
+    return unProducto;
+  }
+
   async save(objeto) {
-    let usuarioGuardado = await modelo.create(objeto);
+    let productoGuardado = await modelo.create(objeto);
 
-    return false;
+    return productoGuardado;
   }
-  async update(objeto) {
-    let usuarioGuardado = await modelo.updateOne(objeto);
 
-    return false;
-  }
-  //TO DO no borra 
-  async delete(id) {
-    const productos = this.read() || [];
+  //OK actualiza producto
+  async update(idProducto,objeto) {
+    let productoGuardado = await modelo.findByIdAndUpdate(idProducto,objeto);
 
-    for (var i = 0; i < productos.length; i++) {
-      if (productos[i].id == id) {
-        let item = productos[i];
-        
-        let usuarioGuardado = await modelo.delete(item);
-        return item;
-      }
-    }
+    return productoGuardado;
   }
+
+  
+  //OK borra producto
+  async delete(id) {    
+    
+      let productoBorrado = await modelo.findByIdAndRemove(id);      
+   
+    return productoBorrado;
+      
+  }
+
 }
 
 module.exports = new Producto();

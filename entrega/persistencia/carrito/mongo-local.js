@@ -29,6 +29,7 @@ class Carrito {
   
     //OK actualiza carrito
     async update(id,unCarrito) {      
+      unCarrito.timestamp=new Date(Date.now()).toString();
       let carritoGuardado = await carrito.findByIdAndUpdate(id,unCarrito);  
       return carritoGuardado;
     }
