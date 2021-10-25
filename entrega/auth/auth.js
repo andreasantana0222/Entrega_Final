@@ -1,5 +1,9 @@
-const bcrypt = require('bcrypt');
-const jwt= require('jsonwebtoken');
+//JWT
+//JASON TOKEN
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const secret = process.env.SECRET; // || 'secret'
+
 
 
 class AuthUser{

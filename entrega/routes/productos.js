@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productos = require('../api/producto');
+const auth = require("../auth/auth");
 
 
 
@@ -49,10 +50,8 @@ router.get('/productos/listar/:id', async (req, res) => {
 
 
 // POST api/productos/agregar-------------------------------------------------
-router.post('/productos/agregar', async (req, res) => {
+router.post('/productos/agregar', auth.checkAuthentication, async (req, res) => {
 
-
-if (administrador()){
   try {
     let objeto=req.body;
       res.type('json').send(JSON.stringify(await productos.save(objeto), null, 2) + '\n');
@@ -62,18 +61,12 @@ if (administrador()){
     console.error({error : 'error al agregar'})
     res.status(500).send(JSON.stringify({error : 'error al agregar'}));
   }
-}else{
-  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'agregar' método 'post' no autorizada"}));
-}
-
-
 });
 
 
 // PUT api/productos/actualizar/:id-------------------------------------------------
-router.put('/productos/actualizar/:id', async (req, res) => {
+router.put('/productos/actualizar/:id', auth.checkAuthentication, async (req, res) => {
 
-if (administrador()){
   try {
     let prods=await productos.read();
     let id=req.params.id.toString();
@@ -90,9 +83,6 @@ if (administrador()){
     res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
   }
 
-}else{
-  res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'actualizar' método 'put' no autorizada"}));
-}
   });
 
 // DELETE api/productos/borrar/:id-------------------------------------------------
