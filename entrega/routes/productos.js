@@ -3,6 +3,7 @@ const router = express.Router();
 const productos = require('../api/producto');
 
 
+
 let administrador= () => true;
 
 // GET api/productos/listar-------------------------------------------------
@@ -97,7 +98,7 @@ if (administrador()){
 // DELETE api/productos/borrar/:id-------------------------------------------------
   router.delete('/productos/borrar/:id', async (req, res) => {
 
-if (administrador()){
+
     try {
       let id=req.params.id.toString();
 
@@ -113,9 +114,6 @@ if (administrador()){
       res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
     }
 
-  }else{
-    res.status(500).send(JSON.stringify({ error : -1, descripcion: "ruta 'borrar' método 'delete' no autorizada"}));
-  }
     });
 
 

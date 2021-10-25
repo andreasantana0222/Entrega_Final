@@ -10,6 +10,7 @@ const io = require('socket.io')(http);
 // Declaramos la api que tiene la Clase de acceso al archivo
 const productos = require('./api/producto');
 const carrito = require('./api/carrito');
+const usuarios = require('./api/usuario');
 
 // Declaramos la api que tiene la Clase de acceso al archivo
 const chat = require('./api/chat');
@@ -52,8 +53,13 @@ app.set("views", __dirname + '/views');
 // importo las rutas y las uso con el prefijo /api
 const productosRouter = require('./routes/productos');
 const carritoRouter = require('./routes/carrito');
+const usuariosRouter = require('./routes/usuarios');
+
+
 app.use('/api', productosRouter);
 app.use('/api', carritoRouter);
+app.use('/api', usuariosRouter);
+
 
 // indico donde estan los archivos estaticos
 app.use(express.static('public'));
@@ -108,10 +114,11 @@ io.on('connection', async(socket) => {
 
 //JWT
 //JASON TOKEN
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const secret = 'secret'; //process.env.MY_SECRET_TOKEN || 'secret'
+/*const jwt = require('jsonwebtoken');
+//const bcrypt = require('bcrypt');
+//const secret = 'secret'; //process.env.MY_SECRET_TOKEN || 'secret'
 const usuarios = [];
+const auth = require('../entrega/auth/jwt/authJWT');
 
 app.post('/registrar', (req, res) => {
     try {
@@ -138,7 +145,7 @@ app.post('/login', (req, res) => {
     res.send({ token: generateToken(user) });
 });
 
-app.get('/datos', checkAuthentication, (req, res) => {
+app.get('/datos', auth.checkAuthentication(), (req, res) => {
     res.send('<h1>datos protegidos por middleware</h1>');
 });
 
@@ -166,7 +173,7 @@ function generateToken(user) {
 
 const createHash = (password) => {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-}
+}*/
 
 //---------------------------------------fin  JWT
 
