@@ -86,7 +86,7 @@ router.put('/productos/actualizar/:id', auth.checkAuthentication, async (req, re
   });
 
 // DELETE api/productos/borrar/:id-------------------------------------------------
-  router.delete('/productos/borrar/:id', async (req, res) => {
+  router.delete('/productos/borrar/:id',auth.checkAuthentication, async (req, res) => {
 
 
     try {

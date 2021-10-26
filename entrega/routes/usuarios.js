@@ -81,7 +81,7 @@ router.post("/usuarios/login", async (req, res) => {
 });
 
 // PUT api/productos/actualizar/:id-------------------------------------------------
-router.put("/usuarios/actualizar/:id", async (req, res) => {
+router.put("/usuarios/actualizar/:id", auth.checkAuthentication, async (req, res) => {
   try {
     let id = req.params.id.toString();
 
@@ -128,6 +128,7 @@ router.delete("/usuarios/borrar/:id", auth.checkAuthentication, async (req, res)
   }
 });
 
+//*TEST */
 router.get("/usuarios/datos", auth.checkAuthentication, async (req, res) => {
   try {
     res.send("<h1>datos protegidos por middleware</h1>");
@@ -135,5 +136,6 @@ router.get("/usuarios/datos", auth.checkAuthentication, async (req, res) => {
     console.log(error);
   }
 });
+/*FIN TEST*/
 
 module.exports = router;
