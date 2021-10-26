@@ -39,5 +39,4 @@ Mongo Local + Mongoose
 ## 5) El usuario podrá registrar sus credenciales de acceso (email y password) para luego poder ingresar a su cuenta. Estas credenciales serán guardadas en la base de datos MongoDB encriptando la contraseña.
 * libreria bcrypt 
 
-## 6) El cliente tendrá una sesión activa de usuario con tiempo de expiración
-configurable.
+## 6) El cliente tendrá una sesión activa de usuario con tiempo de expiración configurable.
