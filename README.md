@@ -40,3 +40,7 @@ Mongo Local + Mongoose
 * libreria bcrypt 
 
 ## 6) El cliente tendrá una sesión activa de usuario con tiempo de expiración configurable.
+
+## 7) Implementarás un canal de chat basado en websockets, el cual permita atender las consultas del cliente.
+
+* http://localhost:3000/chat.html

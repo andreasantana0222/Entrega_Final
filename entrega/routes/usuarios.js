@@ -60,6 +60,7 @@ router.post("/usuarios/registrar", async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------
 router.post("/usuarios/login", async (req, res) => {
   try {
     let user = await usuarios.readByUser(
@@ -72,6 +73,8 @@ router.post("/usuarios/login", async (req, res) => {
 
     if (!auth.isValidPassword(user, req.body.password)) {
       return res.status(400).send("usuario/contraseña no valido");
+    } else{
+      //req.session.username=await req.body.username;
     }
 
     res.send({ token: auth.generateToken(user) });

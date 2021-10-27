@@ -49,6 +49,8 @@ class Carrito {
   async delete(id) {    
       return await instancia.delete(id); 
   }
+
+  
 }
 
 module.exports = new Carrito();

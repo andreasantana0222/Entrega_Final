@@ -70,7 +70,61 @@ app.get('/', (req, res) => {
     res.sendFile('index.html',{root:__dirname});
 });
 
+/// SESSION
+const session = require('express-session');
 
+var hour = 3600000;
+
+app.use(session({
+    secret: 'secreto',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        originalMaxAge: hour,
+        expires: new Date(Date.now() + hour),
+        httpOnly:true
+    }
+}));
+
+app.get('/con-session', (req, res) => {
+    if (req.session.contador) {
+        req.session.contador++
+        res.send(`Ud ha visitado el sitio ${req.session.contador} veces.`)
+    }
+    else {
+        req.session.contador = 1
+        res.send('Bienvenido a su primera visita al sitio!')
+    }
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (!err) res.send('Logout ok!');
+        else res.send({ status: 'Logout ERROR', body: err });
+    })
+});
+
+app.get('/info', (req, res) => {
+    console.log('------------ req.session -------------')
+    console.log(req.session)
+    console.log('--------------------------------------')
+
+    console.log('----------- req.sessionID ------------')
+    console.log(req.sessionID)
+    console.log('--------------------------------------')
+
+    console.log('----------- req.cookies ------------')
+    console.log(req.cookies)
+    console.log('--------------------------------------')
+
+    console.log('---------- req.sessionStore ----------')
+    console.log(req.sessionStore)
+    console.log('--------------------------------------')
+
+    res.send('Send info ok!')
+});
+
+///----------------FIN SESSION
 
 // obtengo el puerto del enviroment o lo seteo por defecto
 const PORT = process.env.PORT || 3000;
@@ -111,71 +165,6 @@ io.on('connection', async(socket) => {
         io.sockets.emit('actualizar', await productos.filtrado(), await carrito.read());
     });
 });
-
-//JWT
-//JASON TOKEN
-/*const jwt = require('jsonwebtoken');
-//const bcrypt = require('bcrypt');
-//const secret = 'secret'; //process.env.MY_SECRET_TOKEN || 'secret'
-const usuarios = [];
-const auth = require('../entrega/auth/jwt/authJWT');
-
-app.post('/registrar', (req, res) => {
-    try {
-        let user = req.body;
-        user.password = createHash(user.password);
-        usuarios.push(user);
-        res.send({ status:'Registro exitoso' });
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
-
-app.post('/login', (req, res) => {
-    let user = usuarios.find(user => user.username === req.body.username);
-
-    if (!user) {
-        return res.status(400).send('usuario no encontrado');
-    }
-
-    if (!isValidPassword(user, req.body.password)) {
-        return res.status(400).send('usuario/contraseña no valido');
-    }
-
-    res.send({ token: generateToken(user) });
-});
-
-app.get('/datos', auth.checkAuthentication(), (req, res) => {
-    res.send('<h1>datos protegidos por middleware</h1>');
-});
-
-function checkAuthentication(req, res, next) {
-    let token = req.headers.authorization;
-    if (!token) {
-        return res.status(403).send('debe proveer el token');
-    }
-
-    jwt.verify(token, secret, (err, value) => {
-        if (err) return res.status(500).send('fallo la autenticacion con token');
-
-        req.user = value;
-        next();
-    });
-}
-
-const isValidPassword = (user, password) => {
-    return bcrypt.compareSync(password, user.password);
-}
-
-function generateToken(user) {
-    return jwt.sign({ data: user }, secret, { expiresIn: '10m' });
-}
-
-const createHash = (password) => {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-}*/
-
-//---------------------------------------fin  JWT
 
 
 
