@@ -1,0 +1,4 @@
+{ "_id" : "OeY1kCLgm3agp6EKeJrNbS22uFPUoFZU", "expires" : ISODate("2021-10-27T14:55:54.396Z"), "lastModified" : ISODate("2021-10-27T14:43:02.504Z"), "session" : "{\"cookie\":{\"originalMaxAge\":771895,\"expires\":\"2021-10-27T14:55:54.396Z\",\"httpOnly\":true,\"path\":\"/\"},\"contador\":1}" }       
+> db.sessions.find()
+{ "_id" : "OeY1kCLgm3agp6EKeJrNbS22uFPUoFZU", "expires" : ISODate("2021-10-27T14:57:11.869Z"), "lastModified" : ISODate("2021-10-27T14:44:19.974Z"), "session" : "{\"cookie\":{\"originalMaxAge\":771895,\"expires\":\"2021-10-27T14:57:11.869Z\",\"httpOnly\":true,\"path\":\"/\"},\"contador\":2}" }       
+(i-search)`':

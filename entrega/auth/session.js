@@ -2,7 +2,9 @@
 
 
 class Sesion {
-constructor(){}
+constructor(aSession){
+    this.sess=aSession;
+}
 
     grabarSesion(req,res,user){
         console.log(user.name);
@@ -33,6 +35,14 @@ constructor(){}
         }else{
             return next();
         }
+    }
+
+    getSession(){
+        return this.sess;
+    }
+
+    setSession(sess){
+        this.sess=sess;
     }
 
 }

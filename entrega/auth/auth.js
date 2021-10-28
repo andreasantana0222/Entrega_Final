@@ -2,7 +2,7 @@
 //JASON TOKEN
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secret = process.env.SECRET; // || 'secret'
+const secret = process.env.TOKEN_SECRET; // || 'secret'
 
 
 
@@ -24,7 +24,7 @@ class AuthUser{
             return res.status(403).send('debe proveer el token');
         }
     
-        jwt.verify(token, process.env.SECRET, (err, value) => {
+        jwt.verify(token, process.env.TOKEN_SECRET, (err, value) => {
             if (err) return res.status(500).send('fallo la autenticacion con token');
     
             req.user = value;
@@ -37,7 +37,7 @@ class AuthUser{
     }
     
      generateToken(user) {
-        return jwt.sign({ data: user }, process.env.SECRET, { expiresIn: process.env.EXPIRATION});
+        return jwt.sign({ data: user }, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION});
     }
     
      createHash (password)  {

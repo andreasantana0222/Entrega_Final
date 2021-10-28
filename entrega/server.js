@@ -50,32 +50,28 @@ app.set("views", __dirname + '/views');
 
 
 
-// importo las rutas y las uso con el prefijo /api
-const productosRouter = require('./routes/productos');
-const carritoRouter = require('./routes/carrito');
-const usuariosRouter = require('./routes/usuarios');
 
 
-app.use('/api', productosRouter);
-app.use('/api', carritoRouter);
-app.use('/api', usuariosRouter);
-
-
-// indico donde estan los archivos estaticos
-app.use(express.static('public'));
-
-/// GET api/-------------------------------------------------
-// envio a renderizar el html en la raiz de la misma
-app.get('/', (req, res) => {
-    res.sendFile('index.html',{root:__dirname});
-});
 
 /// SESSION
-const session = require('express-session');
+const sessions = require('express-session');
+const cookieParser = require("cookie-parser");
+const MongoStore = require('connect-mongo');
+const config = require('./src/mongo-local/config/config.json');
+//const passport = require('passport');
+
+
+// inicializamos passport
+//app.use(passport.initialize());
+//app.use(passport.session());
+
+
+app.use(cookieParser());
+
 
 var hour = 3600000;
 
-app.use(session({
+app.use(sessions({
     secret: 'secreto',
     resave: false,
     saveUninitialized: false,
@@ -83,10 +79,22 @@ app.use(session({
         originalMaxAge: hour,
         expires: new Date(Date.now() + hour),
         httpOnly:true
-    }
+    },
+    store: MongoStore.create({
+        mongoUrl: config.MONGO_URL,
+        ttl: 14 * 24 * 60 * 60,// = 14 days The maximum lifetime (in seconds) of the session which will be used to set session.cookie.expires if it is not yet set. Default is 14 days.
+        autoRemove: 'native', //Behavior for removing expired sessions. Possible values: 'native', 'interval' and 'disabled'.
+        touchAfter: 24 * 3600, // time period in seconds. Interval (in seconds) between session updates.
+        collectionName: 'sessions' //A name of collection used for storing sessions.
+    })
 }));
 
+var session;
+
+
 app.get('/con-session', (req, res) => {
+    
+
     if (req.session.contador) {
         req.session.contador++
         res.send(`Ud ha visitado el sitio ${req.session.contador} veces.`)
@@ -121,10 +129,41 @@ app.get('/info', (req, res) => {
     console.log(req.sessionStore)
     console.log('--------------------------------------')
 
+    
     res.send('Send info ok!')
 });
 
 ///----------------FIN SESSION
+
+
+
+// importo las rutas y las uso con el prefijo /api
+const productosRouter = require('./routes/productos');
+const carritoRouter = require('./routes/carrito');
+const usuariosRouter = require('./routes/usuarios');
+
+
+app.use('/api', productosRouter);
+app.use('/api', carritoRouter);
+app.use('/api', usuariosRouter);
+
+
+// indico donde estan los archivos estaticos
+app.use(express.static('public'));
+
+/// GET api/-------------------------------------------------
+// envio a renderizar el html en la raiz de la misma
+app.get('/', (req, res) => {
+    req.cookie('carrito','sin productos');
+    var sess = req.session;
+    if (sess && sess.username) {
+    res.send('Hello ' + sess.username);
+    } else {
+    res.send('Please login');
+    }
+    res.sendFile('index.html',{root:__dirname});
+});
+
 
 // obtengo el puerto del enviroment o lo seteo por defecto
 const PORT = process.env.PORT || 3000;

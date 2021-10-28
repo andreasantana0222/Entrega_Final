@@ -5,6 +5,7 @@ const auth = require("../auth/auth");
 
 
 
+
 router.get("/usuarios/listar", async (req, res) => {
   try {
     let usus = await usuarios.read();
@@ -60,28 +61,6 @@ router.post("/usuarios/registrar", async (req, res) => {
   }
 });
 
-//-------------------------------------------------------------
-router.post("/usuarios/login", async (req, res) => {
-  try {
-    let user = await usuarios.readByUser(
-      (user) => user.username === req.body.username
-    );
-
-    if (!user) {
-      return res.status(400).send("usuario no encontrado");
-    }
-
-    if (!auth.isValidPassword(user, req.body.password)) {
-      return res.status(400).send("usuario/contraseña no valido");
-    } else{
-      //req.session.username=await req.body.username;
-    }
-
-    res.send({ token: auth.generateToken(user) });
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 // PUT api/productos/actualizar/:id-------------------------------------------------
 router.put("/usuarios/actualizar/:id", auth.checkAuthentication, async (req, res) => {
@@ -131,14 +110,52 @@ router.delete("/usuarios/borrar/:id", auth.checkAuthentication, async (req, res)
   }
 });
 
-//*TEST */
-router.get("/usuarios/datos", auth.checkAuthentication, async (req, res) => {
+
+
+//-------------------------------------------------------------
+router.post("/usuarios/login", async (req, res) => {
   try {
-    res.send("<h1>datos protegidos por middleware</h1>");
+    //1-Busca el usuario
+    let user = await usuarios.readByUser(
+      (user) => user.username === req.body.username
+      
+    );
+    
+   
+    //2-Si no encuentra el usuario envía un mensaje
+
+    if (!user) {
+      return res.status(400).send("usuario no encontrado");
+    }
+
+    //3-si encuentra el usuario pero es incorrecta la password envía un mensaje
+    if (!auth.isValidPassword(user, req.body.password)) {
+
+      return res.status(400).send("usuario/contraseña no valido");
+
+    } 
+    
+    if(user && auth.isValidPassword(user, req.body.password)){
+      
+      if (req.session.username && req.session.contador) {
+        req.session.contador++;
+        res.send(`${req.session.username} ha visitado el sitio ${req.session.contador} veces.`)
+      }
+      else {
+          req.session.username = req.body.username;
+          req.session.contador=1
+          res.send('Bienvenido a su primera visita al sitio!')
+      }
+    }
+
+    //res.send({ token: auth.generateToken(user) });
   } catch (error) {
     console.log(error);
   }
 });
-/*FIN TEST*/
+
+
+
+
 
 module.exports = router;
