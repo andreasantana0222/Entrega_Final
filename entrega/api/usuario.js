@@ -19,10 +19,18 @@ class Usuario {
     }
 
     async readByUser(unUsuario) {
+      console.log('api - readByUser');
       let usuarioEncontrado = await instancia.readByUser(unUsuario);
       return usuarioEncontrado;
     }
   
+    
+    async readByEmail(unUsuario) {
+      console.log('api - readByEmail');
+      let usuarioEncontrado = await instancia.readByEmail(unUsuario);
+      return usuarioEncontrado;
+    }
+
     async save(objeto) {
               
       let item = {
@@ -39,13 +47,16 @@ class Usuario {
     }
   
     async update(idUsuario, objeto) {  
+      console.log('api-update');
       let item = {
         timestamp: new Date(Date.now()).toString(),
         nombre: objeto.nombre,
         email: objeto.email,
-        password: await this.encryptPassword(objeto.password), //objeto.password, 
+        password: await auth.encryptPassword(objeto.password), //objeto.password, 
         foto: objeto.foto               
       };  
+      
+      console.log(idUsuario + item);
       return await instancia.update(idUsuario, item);
     }
   

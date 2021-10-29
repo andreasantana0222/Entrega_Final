@@ -74,7 +74,7 @@ var hour = 3600000;
 app.use(sessions({
     secret: 'secreto',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,//el objeto de sesión se almacenará en el almacén de sesión 
     cookie: {
         originalMaxAge: hour,
         expires: new Date(Date.now() + hour),
@@ -105,12 +105,7 @@ app.get('/con-session', (req, res) => {
     }
 });
 
-app.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (!err) res.send('Logout ok!');
-        else res.send({ status: 'Logout ERROR', body: err });
-    })
-});
+
 
 app.get('/info', (req, res) => {
     console.log('------------ req.session -------------')

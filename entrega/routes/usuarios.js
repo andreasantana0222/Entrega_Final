@@ -38,13 +38,13 @@ router.get("/usuarios/listar/:id", async (req, res) => {
         .status(500)
         .type("json")
         .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
+          JSON.stringify({ error: "usuario no encontrado" }, null, 2) + "\n"
         );
     } else {
       res.type("json").send(JSON.stringify(buscarUsuario, null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    res.status(500).send(JSON.stringify({ error: "usuario no encontrado" }));
   }
 });
 
@@ -65,16 +65,20 @@ router.post("/usuarios/registrar", async (req, res) => {
 // PUT api/productos/actualizar/:id-------------------------------------------------
 router.put("/usuarios/actualizar/:id", auth.checkAuthentication, async (req, res) => {
   try {
-    let id = req.params.id.toString();
+    let id = req.params.id;
+    console.log(id);
 
-    if (id < 1) {
+    if (id=="") {
+      console.log('sin id');
       res
         .type("json")
         .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
+          JSON.stringify({ error: "usuario no encontrado" }, null, 2) + "\n"
         );
     } else {
+      console.log('con id');
       let objeto = req.body;
+      console.log('con id', objeto);
       return res
         .type("json")
         .send(
@@ -82,8 +86,8 @@ router.put("/usuarios/actualizar/:id", auth.checkAuthentication, async (req, res
         );
     }
   } catch (e) {
-    console.error({ error: "producto no encontrado" });
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    console.error({ error: "usuario no encontrado" });
+    res.status(500).send(JSON.stringify({ error: "usuario no encontrado" }));
   }
 });
 
@@ -97,7 +101,7 @@ router.delete("/usuarios/borrar/:id", auth.checkAuthentication, async (req, res)
       res
         .type("json")
         .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
+          JSON.stringify({ error: "usuario no encontrado" }, null, 2) + "\n"
         );
     } else {
       return res
@@ -105,8 +109,8 @@ router.delete("/usuarios/borrar/:id", auth.checkAuthentication, async (req, res)
         .send(JSON.stringify(await usuarios.delete(id), null, 2) + "\n");
     }
   } catch (e) {
-    console.error({ error: "producto no encontrado" });
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    console.error({ error: "usuario no encontrado" });
+    res.status(500).send(JSON.stringify({ error: "usuario no encontrado" }));
   }
 });
 
@@ -115,43 +119,54 @@ router.delete("/usuarios/borrar/:id", auth.checkAuthentication, async (req, res)
 //-------------------------------------------------------------
 router.post("/usuarios/login", async (req, res) => {
   try {
-    //1-Busca el usuario
-    let user = await usuarios.readByUser(
-      (user) => user.username === req.body.username
-      
-    );
+    //1-Busca el usuario   
     
-   
-    //2-Si no encuentra el usuario envía un mensaje
-
-    if (!user) {
-      return res.status(400).send("usuario no encontrado");
-    }
-
+     if(req.body.email){        
+        if (req.body.email.length > 0 && req.body.password.length > 0) {         
+          user = await usuarios.readByEmail(req.body.email);          
+        }         
+     } else{
+      if (req.body.username){        
+        if(req.body.username.length > 0 && req.body.password.length > 0) {                  
+          user= await usuarios.readByUser(req.body.username);                  
+        } 
+      } else{
+        //2-Si no encuentra el usuario envía un mensaje 
+        
+        if (!user) {
+          return res.status(400).send("usuario no encontrado");
+        }
+      }
+     }
+     
     //3-si encuentra el usuario pero es incorrecta la password envía un mensaje
-    if (!auth.isValidPassword(user, req.body.password)) {
-
+    if (!auth.isValidPassword(user.password, req.body.password)) {      
       return res.status(400).send("usuario/contraseña no valido");
-
     } 
     
-    if(user && auth.isValidPassword(user, req.body.password)){
-      
-      if (req.session.username && req.session.contador) {
+    if(user && auth.isValidPassword(user.password, req.body.password)){      
+      if (req.session.email && req.session.contador) {
         req.session.contador++;
-        res.send(`${req.session.username} ha visitado el sitio ${req.session.contador} veces.`)
+        //res.send(`${req.session.username} ha visitado el sitio ${req.session.contador} veces.`)
       }
       else {
-          req.session.username = req.body.username;
+          req.session.email = req.body.email;
           req.session.contador=1
-          res.send('Bienvenido a su primera visita al sitio!')
+          //res.send('Bienvenido a su primera visita al sitio!')
       }
     }
 
-    //res.send({ token: auth.generateToken(user) });
+    res.send({ token: auth.generateToken(user) });
   } catch (error) {
     console.log(error);
   }
+});
+
+router.get('/usuarios/logout', (req, res) => {
+  req.session.destroy(err => {
+      if (!err) res.send('Logout ok!');
+      else res.send({ status: 'Logout ERROR', body: err });
+  })
 });
 
 

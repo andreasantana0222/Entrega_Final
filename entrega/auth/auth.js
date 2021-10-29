@@ -32,8 +32,8 @@ class AuthUser{
         });
     }
     
-     isValidPassword  (user, password)  {
-        return bcrypt.compareSync(password, user.password);
+     isValidPassword  (password, receivedPassword)  {
+        return bcrypt.compareSync(receivedPassword, password);
     }
     
      generateToken(user) {

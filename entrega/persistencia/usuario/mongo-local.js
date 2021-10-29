@@ -28,8 +28,17 @@ class Usuario {
      * Read an entity looking for it by id
      * @param {String} unUsuario mongodb id
      */
-   async readByUser(unUsuario) {
-    let usuarioEncontrado = await modelo.findOne({username:unUsuario.username});
+   async readByUser(unUsuario) {   
+    let usuarioEncontrado = await modelo.findOne({'username':unUsuario});
+    return usuarioEncontrado;
+  }
+
+  /**
+     * Read an entity looking for it by id
+     * @param {String} unEmail mongodb id
+     */
+   async readByEmail(unEmail) {    
+    let usuarioEncontrado = await modelo.findOne({'email':unEmail});
     return usuarioEncontrado;
   }
 
