@@ -48,6 +48,9 @@ router.post("/carrito/agregar", async (req, res) => {
   try {
     let objeto = req.body;
 
+    //Cookie
+    res.cookie('carrito',objeto);
+
     res
       .type("json")
       .send(JSON.stringify(await carrito.save(objeto), null, 2) + "\n");

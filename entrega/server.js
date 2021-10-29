@@ -47,13 +47,7 @@ app.set("view engine", "hbs");
 app.set("views", __dirname + '/views');
 
 
-
-
-
-
-
-
-/// SESSION
+/// SESSION -----------------------------------------
 const sessions = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require('connect-mongo');
@@ -65,6 +59,8 @@ const config = require('./src/mongo-local/config/config.json');
 //app.use(passport.initialize());
 //app.use(passport.session());
 
+
+// TO DO pasar las variables al .env
 
 app.use(cookieParser());
 
@@ -83,50 +79,13 @@ app.use(sessions({
     store: MongoStore.create({
         mongoUrl: config.MONGO_URL,
         ttl: 14 * 24 * 60 * 60,// = 14 days The maximum lifetime (in seconds) of the session which will be used to set session.cookie.expires if it is not yet set. Default is 14 days.
-        autoRemove: 'native', //Behavior for removing expired sessions. Possible values: 'native', 'interval' and 'disabled'.
+        autoRemove: 'disabled', //Behavior for removing expired sessions. Possible values: 'native', 'interval' and 'disabled'.
         touchAfter: 24 * 3600, // time period in seconds. Interval (in seconds) between session updates.
         collectionName: 'sessions' //A name of collection used for storing sessions.
     })
 }));
 
-var session;
 
-
-app.get('/con-session', (req, res) => {
-    
-
-    if (req.session.contador) {
-        req.session.contador++
-        res.send(`Ud ha visitado el sitio ${req.session.contador} veces.`)
-    }
-    else {
-        req.session.contador = 1
-        res.send('Bienvenido a su primera visita al sitio!')
-    }
-});
-
-
-
-app.get('/info', (req, res) => {
-    console.log('------------ req.session -------------')
-    console.log(req.session)
-    console.log('--------------------------------------')
-
-    console.log('----------- req.sessionID ------------')
-    console.log(req.sessionID)
-    console.log('--------------------------------------')
-
-    console.log('----------- req.cookies ------------')
-    console.log(req.cookies)
-    console.log('--------------------------------------')
-
-    console.log('---------- req.sessionStore ----------')
-    console.log(req.sessionStore)
-    console.log('--------------------------------------')
-
-    
-    res.send('Send info ok!')
-});
 
 ///----------------FIN SESSION
 

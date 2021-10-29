@@ -170,7 +170,15 @@ router.get('/usuarios/logout', (req, res) => {
 });
 
 
-
+router.get('/usuarios/info', (req, res) => {  
+    
+  res.send({
+      'req.session': req.session,
+      'req.sessionID':req.sessionID,
+      'req.cookies':req.cookies,
+      'req.sessionStore':req.sessionStore
+  })
+});
 
 
 module.exports = router;
