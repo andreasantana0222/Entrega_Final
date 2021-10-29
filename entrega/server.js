@@ -52,12 +52,7 @@ const sessions = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require('connect-mongo');
 const config = require('./src/mongo-local/config/config.json');
-//const passport = require('passport');
 
-
-// inicializamos passport
-//app.use(passport.initialize());
-//app.use(passport.session());
 
 
 // TO DO pasar las variables al .env
@@ -89,7 +84,31 @@ app.use(sessions({
 
 ///----------------FIN SESSION
 
+// PASSPORT-FACEBOOK-------------------------------
 
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+
+// inicializamos passport
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: '/'
+},
+function(accesToken,refreshToken,profile, done){
+    usuarios.readByUser(profile.id,function(err,user){
+        if(err){ return done(err);}
+        done(null,user);
+    });
+}
+));
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook',{ succeRedirect: '/',
+    failureRedirect: '/api/usuarios/login'
+}));
+
+//----------------------FIN PASSPORT-FACEBOOK
 
 // importo las rutas y las uso con el prefijo /api
 const productosRouter = require('./routes/productos');
