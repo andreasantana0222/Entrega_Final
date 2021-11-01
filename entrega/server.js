@@ -93,13 +93,26 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: '/'
+    callbackURL: "/",
+    profile: ['id', 'displayName', 'photos', 'email']
+
 },
 function(accesToken,refreshToken,profile, done){
-    usuarios.readByUser(profile.id,function(err,user){
+    let unUsuario= usuarios.readByUser(profile.id,function(err,user){
         if(err){ return done(err);}
         done(null,user);
     });
+    if(!unUsuario){
+        unUsuario={
+            timestamp: "",
+            nombre: profile.displayName,
+            email: profile.email,
+            password: "",
+            foto: profile.photos[0]
+        };
+        console.log(unUsuario);
+        usuarios.save(unUsuario);
+    }
 }
 ));
 
@@ -109,6 +122,14 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ succeRedirect: '/',
 }));
 
 //----------------------FIN PASSPORT-FACEBOOK
+
+
+
+// PASSPORT-TWITTER-------------------------------
+
+
+
+//----------------------FIN PASSPORT-TWITTER
 
 // importo las rutas y las uso con el prefijo /api
 const productosRouter = require('./routes/productos');

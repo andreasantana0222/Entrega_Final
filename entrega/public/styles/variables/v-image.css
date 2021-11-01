@@ -1,0 +1,42 @@
+/* Escala aplicada mobile */
+@media screen and (max-width: 600px) {
+html {
+    /* Variables de tamaño */
+    --image-2xs: 5px;
+    --image-xs: 10px;
+    --image-s: 20px;
+    --image-m: 30px;
+    --image-l: 40px;
+    --image-xl: 80px;
+    --image-2xl: 200px;
+    }
+
+}
+
+/* Escala aplicada tablet */
+@media screen and (min-width: 600px) {
+html {
+    /* Variables de tamaño */
+    --image-2xs: 10px;
+    --image-xs: 20px;
+    --image-s: 40px;
+    --image-m: 60px;
+    --image-l: 80px;
+    --image-xl: 160px;
+    --image-2xl: 320px;
+    }
+}
+
+/* Escala aplicada monitor */
+@media screen and (min-width: 1024px) {
+    html {
+        /* Variables de tamaño */
+        --image-2xs: 10px;
+        --image-xs: 20px;
+        --image-s: 40px;
+        --image-m: 80px;
+        --image-l: 160px;
+        --image-xl: 320px;
+        --image-2xl: 400px;
+        }
+}

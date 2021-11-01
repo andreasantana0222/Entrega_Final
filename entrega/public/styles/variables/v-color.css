@@ -1,0 +1,57 @@
+html{
+    --primary-10: #12131a;
+    --primary-9: #1f222f;
+    --primary-8: #2d3143;
+    --primary-7: #3b4057;
+    --primary-6: #484f6c;
+    --primary-5: #565e80;
+    --primary-4: #646c94;
+    --primary-3: #777fa3;
+    --primary-2: #8b92b1;
+    --primary-1: #9fa5bf;
+  
+    --secondary-8: #db0400;
+    --secondary-7: #fd0500;
+    --secondary-6: #ff2420;
+    --secondary-5: #ff4642;
+    --secondary-4: #ff6764;
+    --secondary-3: #ff8886;
+    --secondary-2: #ffaaa8;
+    --secondary-1: #fff0f0;
+    --secondary-0: white;
+
+  
+    --primary: var(--primary-8);
+    --secondary: var(--secondary-4);
+    --secondary-light: var(--secondary-1);
+
+    --body:var(--secondary-0);
+
+    --link: var(--secondary-8);
+    --link-hover: var(--secondary-2);
+
+    --headline: var(--primary-9);
+    --logo:var(--secondary-3);
+    --item: var(--primary-6);
+
+    --button-menu: var(--secondary-1);
+    --button-menu-font: var(--primary-7);
+    --button-menu-hover: var(--secondary-0);
+
+    --me:var(--secondary-7);
+
+    --box-right: var(--secondary-0);
+    --box-left: var(--primary-6);
+
+    --box1-right: var(--secondary-0);
+    --box1-left: var(--primary-6);
+
+    --box2-right: var(--secondary-2);
+    --box2-left: var(--secondary-8);
+
+    --box3-right: var(--secondary-2);
+    --box3-left: var(--primary-6);
+
+    --form-btn: var(--secondary-4);
+  }
+  

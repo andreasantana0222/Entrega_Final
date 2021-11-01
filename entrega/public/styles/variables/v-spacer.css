@@ -1,0 +1,44 @@
+  /* Escala aplicada mobile */
+  @media screen and (max-width: 600px) {
+    html {
+        /* Variables de espaciado */
+        --spacer-2xs: 2px;
+        --spacer-xs: 5px;
+        --spacer-s: 10px;
+        --spacer-m: 20px;
+        --spacer-l: 50px;
+        --spacer-xl: 80px;
+        --spacer-2xl: 160px;
+      }
+
+  }
+
+   /* Escala aplicada tablet */
+   @media screen and (min-width: 600px) {
+    html {
+        /* Variables de espaciado */
+        --spacer-2xs: 2px;
+        --spacer-xs: 5px;
+        --spacer-s: 20px;
+        --spacer-m: 60px;
+        --spacer-l: 80px;
+        --spacer-xl: 120px;
+        --spacer-2xl: 160px;
+      }
+    }
+
+    /* Escala aplicada monitor */
+    @media screen and (min-width: 1024px) {
+        html {
+            /* Variables de espaciado */
+            --spacer-2xs: 10px;
+            --spacer-xs: 20px;
+            --spacer-s: 40px;
+            --spacer-m: 80px;
+            --spacer-l: 180px;
+            --spacer-xl: 120px;
+            --spacer-2xl: 160px;
+          }
+    }
+
+    

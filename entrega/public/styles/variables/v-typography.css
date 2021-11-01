@@ -1,0 +1,66 @@
+html {
+    /* Familias tipográficas */
+    --font-1: 'Roboto Slab', serif;
+    --font-2: 'Roboto', sans-serif;
+    --font-3: 'Dosis', sans-serif;
+    
+      /* Variables tipográficas */
+      --text-2xs: 10px;
+      --text-xs: 12px;
+      --text-s: 14px;
+      --text-m: 16px;
+      --text-l: 18px;
+      --text-xl: 20px;
+      --text-2xl: 24px;
+      --text-3xl: 30px;
+      --text-4xl: 36px;
+      --text-5xl: 48px;
+      --text-6xl: 64px;
+      --text-7xl: 72px;
+      --text-8xl: 96px;
+      --text-9xl: 144px;
+}
+      /* Escala aplicada mobile */
+      @media screen and (max-width: 600px) {
+        html{
+            --text-caption: var(--text-xs);
+            --text-note: var(--text-s);
+            --text-base: var(--text-xl);
+            --text-subheader: var(--text-2xl);
+            --text-title: var(--text-4xl);
+            --text-headline: var(--text-4xl);
+            --text-menu: var(--text-3xl);
+            --text-jumbo: var(--text-7xl);
+        }     
+
+      }
+
+      /* Escala aplicada tablet */
+      @media screen and (min-width: 600px) {
+        html{
+            --text-caption: var(--text-s);
+            --text-note: var(--text-m);
+            --text-base: var(--text-2xl);
+            --text-subheader: var(--text-3xl);
+            --text-title: var(--text-4xl);
+            --text-headline: var(--text-4xl);
+            --text-menu: var(--text-4xl);
+            --text-jumbo: var(--text-8xl);
+        }     
+
+      }
+      /* Escala aplicada monitor */
+      @media screen and (min-width: 1024px) {
+        html{
+            --text-caption: var(--text-m);
+            --text-note: var(--text-l);
+            --text-base: var(--text-3xl);
+            --text-subheader: var(--text-4xl);
+            --text-title: var(--text-5xl);
+            --text-headline: var(--text-5xl);
+            --text-menu: var(--text-5xl);
+            --text-jumbo: var(--text-9xl);
+        }     
+
+      }
+    

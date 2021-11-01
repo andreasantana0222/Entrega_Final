@@ -1,0 +1,60 @@
+/*
+CONTENIDO GENERAL PARA TODAS LAS PÁGINAS
+DEL BODY
+*/
+
+/*********************************************/
+/*                  PROFILE PHOTO            */
+/*********************************************/
+
+.image1{
+    display: block;    
+    width: var(--image-2xl);
+    border-radius: 8px;
+ 
+    animation: fadeIn linear 7s;
+      -webkit-animation: fadeIn linear 7s;
+      -moz-animation: fadeIn linear 7s;
+      -o-animation: fadeIn linear 7s;
+      -ms-animation: fadeIn linear 7s;
+  }
+  /*-------------------PROFILE PHOTO---------------------*/
+
+  .item {
+      font-size: var(--image-s);
+      color: var(--item);
+      bottom: var(--spacer-xs);
+      height: var(--image-m);
+  }
+    .grid-container{
+        display: grid;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;   
+        margin-bottom: var(--spacer-2xs); 
+        padding: var(--spacer-xs); 
+       
+              
+    }
+
+    
+    @media screen and (max-width: 600px) {  
+        .grid-container{        
+            grid-template-columns: 1fr 1fr 1fr;
+            
+        }
+    }
+    @media screen and (min-width: 600px) {
+        .grid-container{
+            margin-top: var(--spacer-s);
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto auto;
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        .grid-container{
+            margin-top: var(--spacer-s);
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto auto; 
+        }
+    }

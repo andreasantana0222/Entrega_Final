@@ -1,0 +1,25 @@
+.me{
+    color: var(--me);
+}
+.title{
+    text-align: center;
+    margin-top: var(--spacer-s);
+    margin-bottom: var(--spacer-xs);
+}
+.subheader{
+    text-align: center;
+    margin-bottom: var(--spacer-s);
+    font-weight: 800;
+}
+.tbody{
+    text-align: justify;
+    margin-bottom: var(--spacer-s);
+    margin-left: var(--spacer-xs);
+    margin-right: var(--spacer-xs);
+}
+.box{
+    background: linear-gradient(135deg, white, #9198e5);
+    margin: var(--spacer-xs);
+    padding-bottom: var(--spacer-s);    
+    border-radius: 20px;    
+}

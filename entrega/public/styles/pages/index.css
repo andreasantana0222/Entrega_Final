@@ -1,0 +1,132 @@
+
+.site{
+margin-top:var(--spacer-xs);
+}
+
+.logo_image{
+    width: var(--image-l);
+}
+
+.site_image{
+    padding-top: var(--spacer-s);    
+    width: var(--image-2xl);
+    border-radius: 8px;
+}
+
+
+.box2{
+    background: linear-gradient(135deg, var(--box2-right), var(--box2-left));
+    margin: var(--spacer-xs);
+    padding: var(--spacer-xs); 
+    border-radius: 20px; 
+    width: 80%; 
+}
+
+.box3{
+    background: linear-gradient(135deg, var(--box3-right), var(--box3-left));
+    margin: var(--spacer-xs);
+    padding: var(--spacer-xs);  
+    border-radius: 20px;  
+    width: 80%; 
+}
+
+
+@media screen and (max-width: 600px) {    
+    .image1{
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    .grid-container{        
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: var(--spacer-l) auto;
+     }
+     
+    .site{
+        display: flex;
+      flex-direction: column;
+      overflow:visible;  
+      background-color: transparent;
+      width: 100%;
+      z-index: 1;
+      bottom: var(--spacer-xs);
+    }
+    .web_site, .logo_site{
+        text-align: center;
+    }
+    
+}
+
+@media screen and (min-width: 600px) {
+    .image1{        
+        margin-left: var(--spacer-s);
+        margin-right: auto;        
+      }
+
+    .grid-container{
+        margin-top: var(--spacer-s);
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: var(--spacer-l) auto;
+    }
+    
+    .site{
+        display: flex;
+      flex-direction: row;
+      overflow:visible;  
+      background-color: transparent;
+      width: 100%;
+      z-index: 1;
+      bottom: var(--spacer-s);
+    }
+    .web_site{
+        text-align: center;
+        right: var(--spacer-s);
+        width: 50%;
+    }
+    .logo_site{
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 50%;
+        text-align: center;
+    }
+    .site_image{
+        margin-right: auto;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .image1{        
+        margin-left: var(--spacer-s);
+        margin-right: auto;        
+      }
+    .grid-container{
+        margin-top: var(--spacer-xs);
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: var(--spacer-l) auto;
+    }
+    
+    .site{
+      display: flex;
+      flex-direction: row;
+      overflow:visible;  
+      background-color: transparent;
+      width: 100%;
+      z-index: 1;
+      bottom: var(--spacer-xs);
+    }
+
+    .web_site{
+        text-align: center;
+        margin-right: var(--spacer-xs);
+        width: 50%;
+    }
+    .logo_site{
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 50%;
+        text-align: center;
+    }
+    .site_image{
+        margin-right: auto;
+    }
+}

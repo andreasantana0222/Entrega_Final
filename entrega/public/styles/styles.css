@@ -1,0 +1,33 @@
+/* Variables */
+@import url("variables/v-color.css");
+@import url("variables/v-typography.css");
+@import url("variables/v-spacer.css");
+@import url("variables/v-image.css");
+
+
+/* Base */
+
+@import url("base/typography.css");
+
+
+/* Libraries */
+@import url("libraries/animation.css");
+
+/* Layout */
+@import url("layout/header.css");
+@import url("layout/nav.css");
+@import url("layout/content.css");
+@import url("layout/footer.css");
+@import url("layout/error.css");
+
+/* Pages */
+@import url("pages/index.css");
+@import url("pages/about.css");
+@import url("pages/contact.css");
+
+/* Fonts */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@800&display=swap");
+
+    

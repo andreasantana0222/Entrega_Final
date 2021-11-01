@@ -1,0 +1,73 @@
+/* nav */
+
+/* Escala aplicada mobile */
+@media screen and (max-width: 600px) {
+
+    .menu-s{        
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+   
+}
+
+ /* Escala aplicada tablet */
+ @media screen and (min-width: 600px) {
+
+    .container {
+      position: relative;
+      text-align: center;
+      background-color: transparent;
+    }
+    
+    /* Top right text */
+    .menu-s{
+      position: absolute;
+      top: var(--spacer-2xs);
+      right: var(--spacer-xs);        
+      margin-right: var(--spacer-m); 
+    }
+}
+
+/* Escala aplicada monitor */
+@media screen and (min-width: 1024px) {
+
+    .menu-s{      
+      position: absolute;
+      top: var(--spacer-xs);
+      right: var(--spacer-m); 
+      margin-right: var(--spacer-m);  
+    }
+}
+
+
+
+/*****************/
+/*   MENU SMALL  */
+/*****************/
+.menu-s{
+  display: flex;
+  flex-direction: column;
+  overflow:visible;  
+  background-color: transparent;
+  width: max-content;
+  z-index: 1;
+  bottom: var(--spacer-xs);
+}
+
+.button1{
+  border:none;    
+  background-color: transparent;       
+  flex-basis: 100%;
+  animation: marquee-reset;
+  animation-play-state: paused; 
+  width: 100%;
+   
+  
+}
+.button1:hover{
+  background-color: none;
+  animation: marquee 5s linear infinite;
+  animation-play-state: running;
+}
+/*-------------END MENU SMALL---------------*/

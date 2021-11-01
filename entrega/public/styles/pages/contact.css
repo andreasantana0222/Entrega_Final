@@ -1,0 +1,114 @@
+.text-title{
+    text-align: center;
+}
+
+.form-contact{
+    width: 50%;
+    height: 90%;
+    margin: 20px auto 50px auto;
+    padding: 20px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 3px;  
+    margin-left: auto;
+    margin-right: auto;
+     
+}
+
+#send-message > h1{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+label,input, textarea{
+    width: 100%;
+    text-align: left;
+}
+
+.myBtn{
+    margin-top: 15px;
+    width: 100%;
+    height: 45px;
+    background-color: var(--form-btn);
+    border: 2px solid var(--form-btn);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s ease;
+}
+
+.thankyou{
+  font-size: var(--text-base);
+  text-align: justify;
+}
+
+/**
+* Reglas para los iconos del form
+**/
+
+  
+  .success-icon,
+  .failure-icon {
+    right: 0;
+    opacity: 0;
+    position: absolute;
+    padding: 10px;
+  }
+  
+  .failure-icon,
+  .error {
+    color: red;
+  }
+  
+  .success-icon {
+    color: green;
+  }
+  
+  .error {
+    font-size: 14.5px;
+    margin-top: 5px;
+  }
+
+@media screen and (max-width: 600px) {    
+    .image1{
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    
+     .form-contact{
+        width: 70%;
+        height: 90%;        
+     }
+    
+}
+
+@media screen and (min-width: 600px) {
+    .image1{        
+        left: var(--spacer-2xs);
+        margin-right: auto;        
+      }
+    
+    .form-contact{
+        width: 50%;
+        height: 95%;
+     }
+     
+
+}
+
+@media screen and (min-width: 1024px) {
+    .image1{        
+        margin-left: var(--spacer-s);
+        margin-right: auto;        
+      }
+    
+    .form-contact{
+        width: 50%;
+        height: 700px;
+     }
+     
+}

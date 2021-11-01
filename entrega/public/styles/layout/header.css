@@ -1,0 +1,61 @@
+/*
+CONTENIDO GENERAL PARA TODAS LAS PÁGINAS
+DEL BODY>HEADER
+*/
+
+
+.header{
+    padding-top: var(--spacer-m);
+    padding-bottom: var(--spacer-m);
+}
+
+.header .container{
+    display: flex;
+}
+
+.index_header-logo{
+    width: auto;
+}
+
+
+/*********************************************/
+/*                  LOGO                     */
+/*********************************************/
+
+
+body > div.header > div > span.index_header-logo > i{
+    display: block;
+    color: var(--logo);
+    font-size: var(--text-headline);
+    margin-left: var(--spacer-xs);
+}
+
+
+/*----------------END LOGO---------------------------*/
+
+
+
+/*********************************************/
+/*                 HEADLINE                  */
+/*********************************************/
+
+.fade-in-text {
+    display: inline-block;
+    font-size: var(--text-headline);
+    font-family: var(--font-3);    
+    color: var(--headline);
+    animation: fadeIn linear 7s;
+    -webkit-animation: fadeIn linear 7s;
+    -moz-animation: fadeIn linear 7s;
+    -o-animation: fadeIn linear 7s;
+    -ms-animation: fadeIn linear 7s;
+    margin-left: var(--spacer-xs);
+    font-weight: 900px;
+  }
+  
+  
+/*-------------------END TITLE---------------------*/
+
+
+
+
