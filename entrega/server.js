@@ -93,17 +93,12 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "/",
+    callbackURL: "/auth/facebook/callback",
     profile: ['id', 'displayName', 'photos', 'email']
 
 },
 function(accesToken,refreshToken,profile, done){
-    let unUsuario= usuarios.readByUser(profile.id,function(err,user){
-        if(err){ return done(err);}
-        done(null,user);
-    });
-    if(!unUsuario){
-        unUsuario={
+    let unUsuario= {
             timestamp: "",
             nombre: profile.displayName,
             email: profile.email,
@@ -113,12 +108,13 @@ function(accesToken,refreshToken,profile, done){
         console.log(unUsuario);
         usuarios.save(unUsuario);
     }
-}
+
 ));
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook', passport.authenticate('facebook',{ succeRedirect: '/',
-    failureRedirect: '/api/usuarios/login'
+app.get('/auth/facebook/callback', passport.authenticate('facebook',{
+    successRedirect: '/datos',
+    failureRedirect: '/faillogin'
 }));
 
 //----------------------FIN PASSPORT-FACEBOOK
@@ -127,7 +123,77 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ succeRedirect: '/',
 
 // PASSPORT-TWITTER-------------------------------
 
+const TWITTER_CONSUMER_KEY = '9s8VqNdSvalICuk2rdqGUokGr'; //process.env.TWITTER_CONSUMER_KEY;
+const TWITTER_SECRET = 'u5AdE4d9JgSCOPWAVvTYAOZAtJaE1Pgp8ZNmjx0XcULaNRVjtQ'; //process.env.TWITTER_SECRET;
 
+app.set('trust proxy', 1);
+
+const TwitterStrategy = require('passport-twitter').Strategy;
+
+// inicializamos passport
+passport.use(new TwitterStrategy({
+    consumerKey: TWITTER_CONSUMER_KEY,
+    consumerSecret: TWITTER_SECRET,
+    userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+    callbackURL: '/auth/twitter/callback',
+    include_email:true,
+    include_entities:true
+
+},
+function(accesToken,refreshToken,profile, done){
+    
+    let unUsuario= {
+            timestamp: "",
+            nombre: profile.displayName,
+            email: profile.emails[0].value,
+            password: "",
+            foto: profile.photos[0]
+        };
+        return done(null, profile);
+        //usuarios.save(unUsuario);
+    }
+
+));
+
+
+
+passport.serializeUser(function (user, done) {
+    //console.log('2 - serializar el usuario', user); // --> req.user
+    let userString = JSON.stringify(user._json);
+    done(null, userString);
+});
+
+passport.deserializeUser(function (user, done) {
+    //console.log('3 - deserializar el usuario', user);
+    done(null, JSON.parse(user));
+});
+
+// inicializamos passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter',
+    {
+        successRedirect: '/datos',
+        failureRedirect: '/faillogin'
+    }
+));
+
+app.get('/faillogin', (req, res) => {
+    res.status(401).send({ error: 'no se pudo autenticar con twitter' })
+});
+
+app.get('/datos', (req, res) => {
+    if (req.isAuthenticated()) {
+        console.log('\n>> REQ.USER ', req.user);
+        res.send('<h1>datos protegidos</h1>');
+    } else {
+        res.status(401).send('debe autenticarse primero');
+    }
+});
 
 //----------------------FIN PASSPORT-TWITTER
 
