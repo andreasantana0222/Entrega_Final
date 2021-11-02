@@ -52,7 +52,11 @@ Mongo Local + Mongoose
 
 ## 10) Dispondrá de una vista creada con pug, que permita ver la configuración del servidor.
 
+http://localhost:3000/pug
+
 ## 11) Se enviará un mail a una casilla configurable, por cada registro nuevo de usuario y con cada orden de compra generada.
+
+http://localhost:3000/ejs
 
 ## 12) En caso de detectar algún error, el servidor enviará una vista implementada con ejs, que contenga el id y el detalle completo
 

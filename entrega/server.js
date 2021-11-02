@@ -43,9 +43,47 @@ app.engine(
     })
 );
 
+// TEMPLATE-ENGINES-----------------------------------------
+//Handlebars
 app.set("view engine", "hbs");
 app.set("views", __dirname + '/views');
 
+//Pug
+
+const pug = require('pug');
+
+
+
+
+// envio a renderizar el html en la raiz de la misma
+app.get('/pug', (req, res) => {
+    
+    // Compile template.pug, and render a set of data
+    res.send(pug.renderFile('./viewsPug/layout.pug',{
+        twitter:'Twitter',
+        twitter1:process.env.TWITTER_APP_ID,
+        twitter2:process.env.TWITTER_CONSUMER_KEY,
+        twitter3:process.env.TWITTER_SECRET,
+        facebook:'Facebook',
+        facebook1:process.env.FACEBOOK_CLIENT_ID,
+        facebook2:process.env.FACEBOOK_CLIENT_SECRET,
+        google:'Google',
+        google1:process.env.GOOGLE_CLIENT_ID,
+        google2:process.env.GOOGLE_CLIENT_SECRET       
+
+    }));
+});
+
+//Ejs
+
+const ejs = require('ejs'),
+    people = ['geddy', 'neil', 'alex'],
+    html = ejs.render('<%= people.join(", "); %>', {people: people});
+app.get('/ejs',(req, res) => {
+    res.render("../viewsEjs/layout.ejs",{html});
+});
+
+//------------------FIN TEMPLATE-ENGINES
 
 /// SESSION Punto  6-----------------------------------------
 const sessions = require('express-session');
@@ -106,7 +144,7 @@ function(accesToken,refreshToken,profile, done){
             foto: profile.photos[0].toString()
         };
         
-        usuarios.save(unUsuario);
+        usuarios.save(unUsuario);        
         return done(null, profile); 
     }
 
@@ -185,14 +223,20 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',
 ));
 
 app.get('/auth/faillogin', (req, res) => {
-    res.status(401).send({ error: 'no se pudo autenticar' })
+    //res.status(401).send({ error: 'no se pudo autenticar' })
+    const ejs = require('ejs'),        
+        html = ejs.render('<%= err; %>', {err: 'No se pudo autenticar' });
+    res.status(401).render("../viewsEjs/layout.ejs",{html});
 });
 
 app.get('/auth/datos', (req, res) => {
     if (req.isAuthenticated()) {        
         res.send({datos: req.user});
     } else {
-        res.status(401).send('debe autenticarse primero');
+        //res.status(401).send('debe autenticarse primero');
+        const ejs = require('ejs'),
+        html = ejs.render('<%= err; %>', {err: 'Debe autenticarse primero' });
+    res.status(401).render("../viewsEjs/layout.ejs",{html});
     }
 });
 
@@ -322,12 +366,22 @@ io.on('connection', async(socket) => {
 // en caso de error, avisar
 http.on('error', error => {
     console.log('error en el servidor:', error);
-    res.status(500).send({error : 'ocurrió un error'});
+    //res.status(500).send({error : 'ocurrió un error'});
+    const ejs = require('ejs'),        
+        html = ejs.render('<%= err.stack(", "); %>', {err: err});
+    res.status(500).render("../viewsEjs/layout.ejs",{html});
 });
 
 
 //manejo de errores
 app.use(function(err,req,res,next){
   console.error(err.stack);
-  res.status(500).send({error : 'ocurrió un error'});
-});
+  //res.status(500).send({error : 'ocurrió un error'});
+
+  //Ejs
+
+        const ejs = require('ejs'),        
+            html = ejs.render('<%= err.stack(", "); %>', {err: err});        
+        res.status(500).render("../viewsEjs/layout.ejs",{html});
+        
+  });
