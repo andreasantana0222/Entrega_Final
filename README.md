@@ -40,7 +40,22 @@ Mongo Local + Mongoose
 * libreria bcrypt 
 
 ## 6) El cliente tendrá una sesión activa de usuario con tiempo de expiración configurable.
+* server.js
 
 ## 7) Implementarás un canal de chat basado en websockets, el cual permita atender las consultas del cliente.
 
 * http://localhost:3000/chat.html
+
+## 8) La arquitectura del servidor estará basada en capas (MVC)
+
+## 9) El servidor podrá tomar configuraciones desde un archivo externo.
+
+## 10) Dispondrá de una vista creada con pug, que permita ver la configuración del servidor.
+
+## 11) Se enviará un mail a una casilla configurable, por cada registro nuevo de usuario y con cada orden de compra generada.
+
+## 12) En caso de detectar algún error, el servidor enviará una vista implementada con ejs, que contenga el id y el detalle completo
+
+## 13) Dos opciones para el frontend: desarrollo por parte del estudiante, ó se proporcionará uno para hacer las pruebas necesarias.
+
+## 14) Requisitos Base

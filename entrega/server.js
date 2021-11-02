@@ -47,7 +47,7 @@ app.set("view engine", "hbs");
 app.set("views", __dirname + '/views');
 
 
-/// SESSION -----------------------------------------
+/// SESSION Punto  6-----------------------------------------
 const sessions = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require('connect-mongo');
@@ -103,18 +103,19 @@ function(accesToken,refreshToken,profile, done){
             nombre: profile.displayName,
             email: profile.email,
             password: "",
-            foto: profile.photos[0]
+            foto: profile.photos[0].toString()
         };
-        console.log(unUsuario);
+        
         usuarios.save(unUsuario);
+        return done(null, profile); 
     }
 
 ));
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook',{
-    successRedirect: '/datos',
-    failureRedirect: '/faillogin'
+    successRedirect: '/auth/datos',
+    failureRedirect: '/auth/faillogin'
 }));
 
 //----------------------FIN PASSPORT-FACEBOOK
@@ -123,8 +124,8 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',{
 
 // PASSPORT-TWITTER-------------------------------
 
-const TWITTER_CONSUMER_KEY = '9s8VqNdSvalICuk2rdqGUokGr'; //process.env.TWITTER_CONSUMER_KEY;
-const TWITTER_SECRET = 'u5AdE4d9JgSCOPWAVvTYAOZAtJaE1Pgp8ZNmjx0XcULaNRVjtQ'; //process.env.TWITTER_SECRET;
+const TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
+const TWITTER_SECRET = process.env.TWITTER_SECRET;
 
 app.set('trust proxy', 1);
 
@@ -146,11 +147,12 @@ function(accesToken,refreshToken,profile, done){
             timestamp: "",
             nombre: profile.displayName,
             email: profile.emails[0].value,
-            password: "",
-            foto: profile.photos[0]
+            password: "123",
+            foto: profile.photos[0].toString()
         };
-        return done(null, profile);
-        //usuarios.save(unUsuario);
+        
+        usuarios.save(unUsuario);
+        return done(null, profile);    
     }
 
 ));
@@ -177,25 +179,75 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter',
     {
-        successRedirect: '/datos',
-        failureRedirect: '/faillogin'
+        successRedirect: '/auth/datos',
+        failureRedirect: '/auth/faillogin'
     }
 ));
 
-app.get('/faillogin', (req, res) => {
-    res.status(401).send({ error: 'no se pudo autenticar con twitter' })
+app.get('/auth/faillogin', (req, res) => {
+    res.status(401).send({ error: 'no se pudo autenticar' })
 });
 
-app.get('/datos', (req, res) => {
-    if (req.isAuthenticated()) {
-        console.log('\n>> REQ.USER ', req.user);
-        res.send('<h1>datos protegidos</h1>');
+app.get('/auth/datos', (req, res) => {
+    if (req.isAuthenticated()) {        
+        res.send({datos: req.user});
     } else {
         res.status(401).send('debe autenticarse primero');
     }
 });
 
 //----------------------FIN PASSPORT-TWITTER
+
+// PASSPORT-GOOGLE-------------------------------
+
+const GOOGLE_CLIENT_ID= process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET= process.env.GOOGLE_CLIENT_SECRET;
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+/**
+ * This scope tells google what information we want to request.
+ */
+ const defaultScope = [
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/userinfo.email'
+  ];
+
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback',
+    scope: defaultScope,
+    access_type: 'offline',
+    prompt: 'consent'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let unUsuario= {
+        timestamp: "",
+        nombre: profile.displayName,
+        email: profile.emails[0].value,
+        password: "123",
+        foto: profile.photos[0].value
+    };
+    
+    usuarios.save(unUsuario);
+    return done(null, profile);   
+
+  }
+
+  
+));
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['openid', 'email','profile'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google',
+    {
+        successRedirect: '/auth/datos',
+        failureRedirect: '/auth/faillogin'
+    }
+));
+//----------------------FIN PASSPORT-GOOGLE
 
 // importo las rutas y las uso con el prefijo /api
 const productosRouter = require('./routes/productos');
