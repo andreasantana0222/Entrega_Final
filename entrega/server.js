@@ -103,7 +103,7 @@ var hour = 3600000;
 app.use(sessions({
     secret: 'secreto',
     resave: false,
-    saveUninitialized: true,//el objeto de sesión se almacenará en el almacén de sesión 
+    saveUninitialized: false,//el objeto de sesión se almacenará en el almacén de sesión 
     cookie: {
         originalMaxAge: hour,
         expires: new Date(Date.now() + hour),
@@ -112,7 +112,7 @@ app.use(sessions({
     store: MongoStore.create({
         mongoUrl: config.MONGO_URL,
         ttl: 14 * 24 * 60 * 60,// = 14 days The maximum lifetime (in seconds) of the session which will be used to set session.cookie.expires if it is not yet set. Default is 14 days.
-        autoRemove: 'disabled', //Behavior for removing expired sessions. Possible values: 'native', 'interval' and 'disabled'.
+        autoRemove: 'native', //Behavior for removing expired sessions. Possible values: 'native', 'interval' and 'disabled'.
         touchAfter: 24 * 3600, // time period in seconds. Interval (in seconds) between session updates.
         collectionName: 'sessions' //A name of collection used for storing sessions.
     })
@@ -231,7 +231,8 @@ app.get('/auth/faillogin', (req, res) => {
 
 app.get('/auth/datos', (req, res) => {
     if (req.isAuthenticated()) {        
-        res.send({datos: req.user});
+        //res.send({datos: req.user});
+        res.redirect('/index.html')
     } else {
         //res.status(401).send('debe autenticarse primero');
         const ejs = require('ejs'),
@@ -297,12 +298,12 @@ app.get('/auth/google/callback', passport.authenticate('google',
 const productosRouter = require('./routes/productos');
 const carritoRouter = require('./routes/carrito');
 const usuariosRouter = require('./routes/usuarios');
-
+const ordenRouter = require('./routes/orden');
 
 app.use('/api', productosRouter);
 app.use('/api', carritoRouter);
 app.use('/api', usuariosRouter);
-
+app.use('/api', ordenRouter);
 
 // indico donde estan los archivos estaticos
 app.use(express.static('public'));
@@ -310,14 +311,13 @@ app.use(express.static('public'));
 /// GET api/-------------------------------------------------
 // envio a renderizar el html en la raiz de la misma
 app.get('/', (req, res) => {
-    req.cookie('carrito','sin productos');
-    var sess = req.session;
-    if (sess && sess.username) {
-    res.send('Hello ' + sess.username);
+    
+    if (req.isAuthenticated()) {
+        res.sendFile('index.html',{root:__dirname});
     } else {
-    res.send('Please login');
+        res.redirect('/register.html');
     }
-    res.sendFile('index.html',{root:__dirname});
+    
 });
 
 
@@ -366,7 +366,7 @@ io.on('connection', async(socket) => {
 // en caso de error, avisar
 http.on('error', error => {
     console.log('error en el servidor:', error);
-    //res.status(500).send({error : 'ocurrió un error'});
+    
     const ejs = require('ejs'),        
         html = ejs.render('<%= err.stack(", "); %>', {err: err});
     res.status(500).render("../viewsEjs/layout.ejs",{html});
@@ -376,7 +376,7 @@ http.on('error', error => {
 //manejo de errores
 app.use(function(err,req,res,next){
   console.error(err.stack);
-  //res.status(500).send({error : 'ocurrió un error'});
+  
 
   //Ejs
 

@@ -2,6 +2,9 @@ const { text } = require('express');
 const nodemailer=require('nodemailer');
 const fs = require('fs');
 
+const factory = require("../persistencia/factory");
+const instancia = factory.getPersistencia("mongo-local", "carrito");
+
 class Mail{
     constructor(){}
 
@@ -13,15 +16,7 @@ class Mail{
      * @param {String} text 
      */
     sendMailWelcome(from,to,subject,text){
-        const transporter = nodemailer.createTransport({
-            host: process.env.NODEMAILER_HOST, //'smtp.ethereal.email',
-            port: process.env.NODEMAILER_PORT, //587,
-            auth: {
-                user: process.env.NODEMAILER_AUTH_USER,
-                pass: process.env.NODEMAILER_AUTH_PASS
-            },
-            tls: { rejectUnauthorized: false }
-        });
+        
         
         /*
         const mailOptions = {
@@ -39,7 +34,67 @@ class Mail{
         subject: subject,
         text: text,
         html: fs.readFileSync(archivo, 'utf-8')
-       }
+       };
+
+       const transporter = nodemailer.createTransport({
+        host: process.env.NODEMAILER_HOST, //'smtp.ethereal.email',
+        port: process.env.NODEMAILER_PORT, //587,
+        auth: {
+            user: process.env.NODEMAILER_AUTH_USER,
+            pass: process.env.NODEMAILER_AUTH_PASS
+        },
+        tls: { rejectUnauthorized: false }
+    });
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+                return err
+            }
+            
+        });
+    }
+
+    /**
+     * 
+     * @param {String} from 
+     * @param {String} to 
+     * @param {String} subject 
+     * @param {String} text 
+     * @param {String} idCarrito 
+     */
+    async sendMailNewOrder(from,to,subject,text,idCarrito){
+
+        let unCarrito= await instancia.readById(idCarrito);
+        let archivo ="";
+        console.log(unCarrito);
+        if (unCarrito){
+            archivo = '<html><head></head><body>' + unCarrito.producto.id + " - " + unCarrito.producto.nombre  + '</body></html>';
+        
+        } else{
+            archivo='<html><head></head><body>Error al leer producto</body></html>';
+        
+        }
+        //let archivo = (__dirname+ "../../public") + "/email.txt";
+        //let archivo = '<html><head></head><body>' + carrito.producto.nombre + '</body></html>';
+        const transporter = nodemailer.createTransport({
+            host: process.env.NODEMAILER_HOST, //'smtp.ethereal.email',
+            port: process.env.NODEMAILER_PORT, //587,
+            auth: {
+                user: process.env.NODEMAILER_AUTH_USER,
+                pass: process.env.NODEMAILER_AUTH_PASS
+            },
+            tls: { rejectUnauthorized: false }
+        });
+
+        const mailOptions ={
+            from: from,
+            to: to,
+            subject: subject,
+            text: text,
+            html: archivo
+           };
+           console.log(mailOptions);
+           
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
                 console.log(err)

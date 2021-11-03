@@ -15,6 +15,14 @@
 <body>
     
 
+    <button type="button" class="btn btn-light" onClick="window.location.href='index.html'">Inicio</button>
+    <button type="button" class="btn btn-light" onClick="window.location.href='login.html'">Login</button>
+    <button type="button" class="btn btn-light" onClick="window.location.href='register.html'">Register</button>
+    <button type="button" class="btn btn-light" onClick="window.location.href='chat.html'">Contacto</button>
+    <button type="button" class="btn btn-light" onClick="window.location.href='/pug'">Pug</button>
+    <button type="button" class="btn btn-light" onClick="window.location.href='/ejs'">Ejs</button>    
+    
+    <br>
    
 
     <h1>Mi chat</h1>
@@ -23,6 +31,10 @@
     <input type="text" id="username" placeholder="Tu Nombre">
     <input type="text" id="email" placeholder="Tu Email" required>
     <input type="text" id="texto" placeholder="Cuéntanos algo...">
+    
+    <input type="radio" name="tipo" id="usuario" value="usuario" checked>usuario         
+    <input type="radio" name="tipo" id="sistema" value="sistema">sistema
+    
     <input type="submit" value="Enviar">
     </form>
     <div id="messages"></div>

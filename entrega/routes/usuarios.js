@@ -164,8 +164,14 @@ router.post("/usuarios/login", async (req, res) => {
 
 router.get('/usuarios/logout', (req, res) => {
   req.session.destroy(err => {
-      if (!err) res.send('Logout ok!');
-      else res.send({ status: 'Logout ERROR', body: err });
+      if (!err) {
+        req.session=null;
+        res.redirect('/register.html');
+      }
+
+      else {
+        res.send({ status: 'Logout ERROR', body: err });
+      }
   })
 });
 
