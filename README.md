@@ -56,10 +56,13 @@ http://localhost:3000/pug
 
 ## 11) Se enviará un mail a una casilla configurable, por cada registro nuevo de usuario y con cada orden de compra generada.
 
-http://localhost:3000/ejs
-
 ## 12) En caso de detectar algún error, el servidor enviará una vista implementada con ejs, que contenga el id y el detalle completo
+
+http://localhost:3000/ejs
+http://localhost:3000/auth/faillogin
+http://localhost:3000/auth/datos
 
 ## 13) Dos opciones para el frontend: desarrollo por parte del estudiante, ó se proporcionará uno para hacer las pruebas necesarias.
 
 ## 14) Requisitos Base
+

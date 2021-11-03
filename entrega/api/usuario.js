@@ -3,6 +3,8 @@ let instancia = factory.getPersistencia("mongo-local", "usuario");
 
 const auth = require('../auth/auth');
 
+const mail=require('../auth/mail');
+
 class Usuario {
     constructor() {
       this.listaUsuarios = [];
@@ -43,6 +45,9 @@ class Usuario {
       };
      
       await instancia.save(item);
+      //let html='<h1 style="color: blue;">Contenido de prueba desde <span style="color: green;">Node.js con Nodemailer</span></h1>';
+      let html="";
+      mail.sendMailWelcome('Christy User Register',item.email,'Bienvenido a Christy ' + objeto.nombre, 'Bienvenido a Christy, gracias por elegirnos')
       return item;
     }
   
