@@ -38,7 +38,7 @@ class ArchivoCarrito {
   }
 
   delete(objeto) {
-    console.log("persistencia/carrito - delete");
+    
 
     //Consulto el índice
     let indx = this.listaCarritos.findIndex((x) => x.producto.id == objeto.producto.id);

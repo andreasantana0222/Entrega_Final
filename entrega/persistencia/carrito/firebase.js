@@ -7,7 +7,6 @@ admin.initializeApp({
     database: "ecommerce-2212.firebaseio.com"
 });
 
-console.log('Conexion a la base de datos realizada!');
 
 
 const db = admin.firestore();
@@ -20,13 +19,13 @@ class Carrito {
   }
 
   async read() {
-    console.log("read carrito");    
+        
       try {
         
         let snapshot = await query.get();
 
         const contenido = snapshot.docs.map(doc => {
-          //console.log(doc.data());
+          
             return {
               id: doc.data().id,
               timestamp: doc.data().timestamp,
@@ -42,7 +41,7 @@ class Carrito {
   }
 
   async save(objeto) {
-    console.log("save carrito");
+    
 
     const contenido = await this.read();
 

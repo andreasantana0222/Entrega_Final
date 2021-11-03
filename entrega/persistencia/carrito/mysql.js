@@ -9,7 +9,7 @@ class Carrito {
 
 
   async read() {
-    console.log("read carrito");    
+        
       try {
         
         let contenido= await knex.select('carrito.id','carrito.timestamp','productos.id as producto_id','productos.nombre','productos.foto')
@@ -26,7 +26,7 @@ class Carrito {
             }
           }
         })
-        console.log(carrito);
+        
         return carrito;
       } catch (error) {
         throw error;
@@ -36,7 +36,7 @@ class Carrito {
 
   //TO DO no graba las horas
   async save(objeto) {
-    console.log("save carrito");
+    
 
     const contenido = await this.read();
 
@@ -57,7 +57,7 @@ class Carrito {
   }
 
   async update(idCarrito,objeto) {
-    console.log("update carrito");
+    
 
     const contenido = await this.read();
 

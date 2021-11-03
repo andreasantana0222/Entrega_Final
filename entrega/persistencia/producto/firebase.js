@@ -7,7 +7,7 @@ admin.initializeApp({
     database: "ecommerce-2212.firebaseio.com"
 });
 
-console.log('Conexion a la base de datos realizada!');
+
 
 
 const db = admin.firestore();
@@ -20,7 +20,7 @@ class Producto {
   }
 
   async read() {
-    console.log("read productos");    
+        
       try {
         
         let snapshot = await query.get();
@@ -45,7 +45,7 @@ class Producto {
   }
 
   async save(objeto) {
-    console.log("save productos");
+    
 
     const contenido = await this.read();
 

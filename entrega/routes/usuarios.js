@@ -62,14 +62,14 @@ router.post("/usuarios/registrar", async (req, res) => {
 router.put("/usuarios/actualizar/:id", auth.checkAuthentication, async (req, res) => {
   try {
     let id = req.params.id;
-    console.log(id);
+    
 
     if (id=="") {
       miError.MostrarError("usuario no encontrado",res);
     } else {
-      console.log('con id');
+      
       let objeto = req.body;
-      console.log('con id', objeto);
+      
       return res
         .type("json")
         .send(
@@ -152,7 +152,7 @@ router.post("/usuarios/login", async (req, res) => {
 
     res.send({ token: auth.generateToken(user) });
   } catch (error) {
-    console.log(error);
+    
   }
 });
 
@@ -160,14 +160,16 @@ router.post("/usuarios/loginHtml", async (req, res) => {
   try {
     //1-Busca el usuario   
         
-     if(req.body.email){        
+     if(req.body.email){      
+       
         if (req.body.email.length > 0 && req.body.password.length > 0) {         
           user = await usuarios.readByEmail(req.body.email); 
           if (!user) {
-            return res.status(400).send("usuario no encontrado");
+            miError.MostrarError("usuario no encontrado",res);
           }
         }         
      } else{
+      
           if (req.body.username){        
             if(req.body.username.length > 0 && req.body.password.length > 0) {                  
               user= await usuarios.readByUser(req.body.username);                  
@@ -175,35 +177,45 @@ router.post("/usuarios/loginHtml", async (req, res) => {
           } else{
             //2-Si no encuentra el usuario envía un mensaje 
               if (!user) {
-                return res.status(400).send("usuario no encontrado");
+                miError.MostrarError("usuario no encontrado",res);
               }
           }
      }
      
      //2-Si no encuentra el usuario envía un mensaje             
      if (!user) {
-      return res.status(400).send("usuario no encontrado");
+      
+      miError.MostrarError("usuario no encontrado",res);
     }
      
     //3-si encuentra el usuario pero es incorrecta la password envía un mensaje
-    if (!auth.isValidPassword(user.password, req.body.password)) {      
-      return res.status(400).send("usuario/contraseña no valido");
+    if (!auth.isValidPassword(user.password, req.body.password)) {    
+       
+      miError.MostrarError("credenciales invalidas",res);
     } 
     
-    if(user && auth.isValidPassword(user.password, req.body.password)){      
+    if(user && auth.isValidPassword(user.password, req.body.password)){    
+      
+      
       if (req.session.email && req.session.contador) {
+          
+        
         req.session.contador++;
         res.redirect('/registered.html');
       }
       else {
+        
+          
           req.session.email = req.body.email;
           req.session.contador=1;
+
           res.redirect('/registered.html');
       }
     }
     
   } catch (error) {
-    console.log(error);
+    
+    miError.MostrarError("no se encontro el usuario",res);
   }
 });
 router.get('/usuarios/logout', (req, res) => {
@@ -214,7 +226,7 @@ router.get('/usuarios/logout', (req, res) => {
       }
 
       else {
-        res.send({ status: 'Logout ERROR', body: err });
+        miError.MostrarError("Ha cerrado Sesion",res);
       }
   })
 });

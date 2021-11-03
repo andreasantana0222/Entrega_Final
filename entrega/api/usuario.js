@@ -23,14 +23,14 @@ class Usuario {
     }
 
     async readByUser(unUsuario) {
-      console.log('api - readByUser');
+      
       let usuarioEncontrado = await instancia.readByUser(unUsuario);
       return usuarioEncontrado;
     }
   
     
     async readByEmail(unUsuario) {
-      console.log('api - readByEmail');
+      
       let usuarioEncontrado = await instancia.readByEmail(unUsuario);
       return usuarioEncontrado;
     }
@@ -53,7 +53,7 @@ class Usuario {
     }
   
     async update(idUsuario, objeto) {  
-      console.log('api-update');
+      
       let item = {
         timestamp: new Date(Date.now()).toString(),
         nombre: objeto.nombre,
@@ -62,7 +62,7 @@ class Usuario {
         foto: objeto.foto               
       };  
       
-      console.log(idUsuario + item);
+      
       return await instancia.update(idUsuario, item);
     }
   

@@ -8,7 +8,7 @@ class Producto {
   }
 
   async read() {
-    console.log("read productos");    
+        
       try {
         let contenido = await knex.from("productos").select("*");
         return contenido;
@@ -19,7 +19,7 @@ class Producto {
   }
 
   async save(objeto) {
-    console.log("save productos");
+    
 
     const contenido = await this.read();
 

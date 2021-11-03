@@ -18,7 +18,7 @@ class Carrito {
   }
 
   async save(objeto) {
-    console.log('api/carrito - save');   
+      
 
     let idCarrito = this.listaProductos.length + 1 || 1;
 

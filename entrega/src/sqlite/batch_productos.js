@@ -37,10 +37,10 @@ const prod = [
 
 (async () => {
     try {
-        console.log('--> borramos tabla productos');
+        
         await knex.schema.dropTableIfExists('productos');
 
-        console.log('--> tabla productos creada!');
+        
         await knex.schema.createTable('productos', table => {
             table.increments('id').primary().notNullable();
             table.datetime('timestamp');
@@ -52,18 +52,16 @@ const prod = [
             table.integer('stock',100);
         });
 
-        console.log('--> insertamos los productos');
+        
         await knex('productos').insert(prod);
 
-        console.log('--> leemos todos los productos actualizados');
+        
         rows = await knex.from('productos').select('*');
 
-        for (row of rows) {
-          console.log(`${row['id']} ${row['nombre']} ${row['descripcion']} ${row['timestamp']}`);
-        }
+        
 
     } catch (error) {
-        console.log(error);
+        
     } finally {
         knex.destroy();
     }

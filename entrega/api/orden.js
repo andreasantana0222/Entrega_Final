@@ -19,7 +19,7 @@ class Orden {
   }
 
   async save(objeto) {
-    console.log('api/orden - save');   
+      
     this.listaProductos= await instancia.read();
     let idOrden = this.listaProductos.length + 1 || 1;
 

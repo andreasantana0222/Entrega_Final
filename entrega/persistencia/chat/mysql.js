@@ -8,7 +8,7 @@ class Chat {
   }
 
   async read() {
-    console.log("read chats");    
+        
       try {
         let contenido = await knex.from("chat").select("*");
         return contenido;
@@ -19,7 +19,7 @@ class Chat {
   }
 
   async save(objeto) {
-    console.log("save chat");
+    
 
     const contenido = await this.read();
 

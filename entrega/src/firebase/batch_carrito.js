@@ -7,7 +7,7 @@ admin.initializeApp({
     database: "ecommerce-2212.firebaseio.com"
 });
 
-console.log('Conexion a la base de datos realizada!');
+
 
 async function cargaProductos() {
 
@@ -46,9 +46,9 @@ async function cargaProductos() {
             }
         });
 
-        console.log('datos insertados!');
+        
     }catch (error) {
-        console.log('error', error);
+        
     }
 }
 cargaProductos();

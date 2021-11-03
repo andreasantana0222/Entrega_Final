@@ -18,8 +18,7 @@ function sendData() {
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-          console.log(xhr.status);
-          console.log(xhr.responseText);
+          
       }};
     let data = {
       "email": email,

@@ -33,6 +33,7 @@ class AuthUser{
     }
     
      isValidPassword  (password, receivedPassword)  {
+        
         return bcrypt.compareSync(receivedPassword, password);
     }
     

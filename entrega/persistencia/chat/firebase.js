@@ -7,7 +7,7 @@ admin.initializeApp({
     database: "ecommerce-2212.firebaseio.com"
 });
 
-console.log('Conexion a la base de datos realizada!');
+
 
 
 const db = admin.firestore();
@@ -19,7 +19,7 @@ class Chat {
   }
 
   async read() {
-    console.log("read chats");    
+       
       try {
         let snapshot = await query.get();
         const contenido = snapshot.docs.map(doc => {
@@ -38,7 +38,7 @@ class Chat {
   }
 
   async save(objeto) {
-    console.log("save chat");
+    
 
     const contenido = await this.read();
 

@@ -7,7 +7,7 @@ constructor(aSession){
 }
 
     grabarSesion(req,res,user){
-        console.log(user.name);
+        
         if ( req.session.user && req.session.contador) {
             req.session.contador++
             //res.send(`Ud ha visitado el sitio veces.`)
@@ -21,12 +21,7 @@ constructor(aSession){
             //res.send('Bienvenido a su primera visita al sitio!')
         }
 
-        console.log(
-            req.session.user,
-            req.session.contador,
-            req.session.cookie.expires,
-            req.session.cookie.maxAge
-        );
+      
     }
 
     validarTimeOut(req,res,next){

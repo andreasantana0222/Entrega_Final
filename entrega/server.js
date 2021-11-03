@@ -197,13 +197,13 @@ function(accesToken,refreshToken,profile, done){
 
 
 passport.serializeUser(function (user, done) {
-    //console.log('2 - serializar el usuario', user); // --> req.user
+    
     let userString = JSON.stringify(user._json);
     done(null, userString);
 });
 
 passport.deserializeUser(function (user, done) {
-    //console.log('3 - deserializar el usuario', user);
+    
     done(null, JSON.parse(user));
 });
 
@@ -329,14 +329,14 @@ const PORT = process.env.PORT || 3000;
 
 // pongo a escuchar el servidor en el puerto indicado
 const server = http.listen(PORT, () => {
-    console.log(`servidor escuchando en http://localhost:${PORT}`);
+    
 });
 
 
 // SOCKET
 // cuando se realice la conexion, se ejecutara una sola vez
 io.on('connection', async(socket) => {
-    console.log("Usuario conectado");
+    
 
     //Actualiza la lista de productos en index.html
     socket.emit('actualizar', await productos.read(), await carrito.read());
@@ -367,7 +367,7 @@ io.on('connection', async(socket) => {
 
 // en caso de error, avisar
 http.on('error', error => {
-    console.log('error en el servidor:', error);
+    
     
     miError.MostrarError("error en el servidor",res);
 });

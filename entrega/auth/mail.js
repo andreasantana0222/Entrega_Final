@@ -47,7 +47,7 @@ class Mail{
     });
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.log(err)
+                
                 return err
             }
             
@@ -66,7 +66,7 @@ class Mail{
 
         let unCarrito= await instancia.readById(idCarrito);
         let archivo ="";
-        console.log(unCarrito);
+        
         if (unCarrito){
             archivo = '<html><head></head><body>' + unCarrito.producto.id + " - " + unCarrito.producto.nombre  + '</body></html>';
         
@@ -93,11 +93,11 @@ class Mail{
             text: text,
             html: archivo
            };
-           console.log(mailOptions);
+           
            
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.log(err)
+                
                 return err
             }
             
