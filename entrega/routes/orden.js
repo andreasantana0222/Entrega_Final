@@ -2,24 +2,19 @@ const express = require("express");
 const router = express.Router();
 const orden = require("../api/orden");
 
+const miError=require('../auth/error');
+
 router.get("/orden/listar", async (req, res) => {
   try {
     let prods = await orden.read();
 
     if (prods == []) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "no hay productos cargados" }, null, 2) + "\n"
-        );
+      miError.MostrarError("orden no encontrada",res);
     } else {
       res.type("json").send(JSON.stringify(prods));
     }
   } catch (e) {
-    res
-      .status(500)
-      .send(JSON.stringify({ error: "no hay productos cargados" }));
+    miError.MostrarError("orden no encontrada",res);
   }
 });
 
@@ -30,17 +25,12 @@ router.get("/orden/listar/:id", async (req, res) => {
     let buscarOrden = await orden.readById(idOrden);
 
     if (buscarOrden == null || req.params.id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("orden no encontrada",res);
     } else {
       res.type("json").send(JSON.stringify(buscarOrden, null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    miError.MostrarError("orden no encontrada",res);
   }
 });
 
@@ -55,7 +45,7 @@ router.post("/orden/agregar", async (req, res) => {
       .type("json")
       .send(JSON.stringify(await orden.save(objeto), null, 2) + "\n");
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: e.stack }));
+    miError.MostrarError("orden no encontrada",res);
   }
 });
 
@@ -65,12 +55,7 @@ router.put("/orden/actualizar/:id", async (req, res) => {
     let id = req.params.id;
 
     if (id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("orden no encontrada",res);
     } else {
       let objeto = req.body;
       return res
@@ -78,7 +63,7 @@ router.put("/orden/actualizar/:id", async (req, res) => {
         .send(JSON.stringify(await orden.update(id, objeto), null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    miError.MostrarError("orden no encontrada",res);
   }
 });
 
@@ -87,42 +72,18 @@ router.delete("/orden/borrar/:id", async (req, res) => {
   try {
     let id = req.params.id;
     if (id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("orden no encontrada",res);
     } else {
       return res
         .type("json")
         .send(JSON.stringify(await orden.delete(id), null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    
+          miError.MostrarError("orden no encontrada",res);
   }
 });
 
-// GET api/productos/vista-------------------------------------------------
-router.get("/orden/vista", async (req, res) => {
-  try {
-    let prods = await orden.read();
 
-    if ((prods.length = 0)) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "no hay productos cargados" }, null, 2) + "\n"
-        );
-    } else {
-      res.render("vista", { hayProductos: true, productos: prods });
-    }
-  } catch (e) {
-    res
-      .status(500)
-      .send(JSON.stringify({ error: "no hay productos cargados" }));
-  }
-});
 
 module.exports = router;

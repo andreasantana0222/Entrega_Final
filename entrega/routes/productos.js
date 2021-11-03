@@ -13,14 +13,19 @@ router.get('/productos/listar',async (req, res) => {
       let prods=await productos.read();
 
       if(prods.length==0){
-        res.type('json').send(JSON.stringify({error : 'no hay productos cargados'}, null, 2) + '\n');
+        const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "no hay productos cargados"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
       }else{
         res.type('json').send(JSON.stringify(prods, null, 2) + '\n');
       }
 
     } catch (e) {
-    console.error({error : e})
-    res.status(500).send(JSON.stringify({error : 'no hay productos cargados'}));
+         
+
+    const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "no hay productos cargados"});        
+        res.status(500).render("../viewsEjs/layout.ejs",{html});
 
   }
 });
@@ -36,14 +41,18 @@ router.get('/productos/listar/:id', async (req, res) => {
     let buscarProducto= await productos.readById(idProducto);    
 
     if ((buscarProducto==null) || req.params.id<1){
-      res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
+      const ejs = require('ejs');        
+      html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+      res.status(500).render("../viewsEjs/layout.ejs",{html});
     } else{      
       
       res.type('json').send(JSON.stringify(buscarProducto, null, 2) + '\n');
     }
   } catch (e) {
-    console.error({error : 'producto no encontrado'})
-    res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
+    
+    const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
   }
 });
 
@@ -57,9 +66,9 @@ router.post('/productos/agregar', auth.checkAuthentication, async (req, res) => 
       res.type('json').send(JSON.stringify(await productos.save(objeto), null, 2) + '\n');
 
   } catch (e) {
-
-    console.error({error : 'error al agregar'})
-    res.status(500).send(JSON.stringify({error : 'error al agregar'}));
+    const ejs = require('ejs');        
+    html = ejs.render('<%= err; %>', {err: "error al agregar"});        
+  res.status(500).render("../viewsEjs/layout.ejs",{html});
   }
 });
 
@@ -72,15 +81,18 @@ router.put('/productos/actualizar/:id', auth.checkAuthentication, async (req, re
     let id=req.params.id.toString();
 
     if (id<1){
-      res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
+      const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
     } else{
       
       let objeto=req.body;
       return res.type('json').send(JSON.stringify(await productos.update(id,objeto), null, 2) + '\n');
     }
   } catch (e) {
-    console.error({error : 'producto no encontrado'})
-    res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
+    const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
   }
 
   });
@@ -93,15 +105,18 @@ router.put('/productos/actualizar/:id', auth.checkAuthentication, async (req, re
       let id=req.params.id.toString();
 
       if (id<1){
-        res.type('json').send(JSON.stringify({error : 'producto no encontrado'}, null, 2) + '\n');
+        const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
       } else{
         
         
         return res.type('json').send(JSON.stringify(await productos.delete(id), null, 2) + '\n');
       }
     } catch (e) {
-      console.error({error : 'producto no encontrado'})
-      res.status(500).send(JSON.stringify({error : 'producto no encontrado'}));
+      const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
     }
 
     });
@@ -113,7 +128,9 @@ router.get('/productos/vista',async (req, res) => {
   try {
     let prods=await productos.read();
     if(prods.length=0){
-      res.type('json').send(JSON.stringify({error : 'no hay productos cargados'}, null, 2) + '\n');
+      const ejs = require('ejs');        
+            html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+          res.status(500).render("../viewsEjs/layout.ejs",{html});
     }else{
       
       
@@ -123,8 +140,9 @@ router.get('/productos/vista',async (req, res) => {
 
 
     } catch (e) {
-    console.error({error : 'no hay productos cargados'})
-    res.status(500).send(JSON.stringify({error : 'no hay productos cargados'}));
+      const ejs = require('ejs');        
+      html = ejs.render('<%= err; %>', {err: "producto no encontrado"});        
+    res.status(500).render("../viewsEjs/layout.ejs",{html});
 
   }
 });

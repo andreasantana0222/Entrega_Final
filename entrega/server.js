@@ -23,7 +23,8 @@ const dotenv = require('dotenv');
 // obtengo la config del .env
 dotenv.config();
 
-
+//Manejo de Errores
+const miError = require('./auth/error');
 
 // creo una app de tipo express
 //const app = express();
@@ -76,11 +77,9 @@ app.get('/pug', (req, res) => {
 
 //Ejs
 
-const ejs = require('ejs'),
-    people = ['geddy', 'neil', 'alex'],
-    html = ejs.render('<%= people.join(", "); %>', {people: people});
+
 app.get('/ejs',(req, res) => {
-    res.render("../viewsEjs/layout.ejs",{html});
+    miError.MostrarError("Modelo EJS",res);
 });
 
 //------------------FIN TEMPLATE-ENGINES
@@ -152,7 +151,7 @@ function(accesToken,refreshToken,profile, done){
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook',{
-    successRedirect: '/auth/datos',
+    successRedirect: '/registered.html',
     failureRedirect: '/auth/faillogin'
 }));
 
@@ -217,27 +216,23 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter',
     {
-        successRedirect: '/auth/datos',
+        successRedirect: '/registered.html',
         failureRedirect: '/auth/faillogin'
     }
 ));
 
 app.get('/auth/faillogin', (req, res) => {
-    //res.status(401).send({ error: 'no se pudo autenticar' })
-    const ejs = require('ejs'),        
-        html = ejs.render('<%= err; %>', {err: 'No se pudo autenticar' });
-    res.status(401).render("../viewsEjs/layout.ejs",{html});
+    
+    miError.MostrarError("No se pudo autenticar",res);
 });
 
 app.get('/auth/datos', (req, res) => {
     if (req.isAuthenticated()) {        
-        //res.send({datos: req.user});
-        res.redirect('/index.html')
+        res.send({datos: req.user});
+        
     } else {
-        //res.status(401).send('debe autenticarse primero');
-        const ejs = require('ejs'),
-        html = ejs.render('<%= err; %>', {err: 'Debe autenticarse primero' });
-    res.status(401).render("../viewsEjs/layout.ejs",{html});
+        
+        miError.MostrarError("debe autenticarse primero",res);
     }
 });
 
@@ -288,7 +283,7 @@ app.get('/auth/google',
 
 app.get('/auth/google/callback', passport.authenticate('google',
     {
-        successRedirect: '/auth/datos',
+        successRedirect: '/registered.html',
         failureRedirect: '/auth/faillogin'
     }
 ));
@@ -313,13 +308,20 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     
     if (req.isAuthenticated()) {
-        res.sendFile('index.html',{root:__dirname});
+        res.redirect('registered.html');
     } else {
-        res.redirect('/register.html');
+        res.sendFile('index.html',{root:__dirname});
     }
     
 });
 
+app.get('/registered.html', (req,res) =>{
+    if (req.isAuthenticated()) {
+        res.redirect('registered.html');
+    } else {
+        res.sendFile('index.html',{root:__dirname});
+    }
+});
 
 // obtengo el puerto del enviroment o lo seteo por defecto
 const PORT = process.env.PORT || 3000;
@@ -367,9 +369,7 @@ io.on('connection', async(socket) => {
 http.on('error', error => {
     console.log('error en el servidor:', error);
     
-    const ejs = require('ejs'),        
-        html = ejs.render('<%= err.stack(", "); %>', {err: err});
-    res.status(500).render("../viewsEjs/layout.ejs",{html});
+    miError.MostrarError("error en el servidor",res);
 });
 
 
@@ -380,8 +380,6 @@ app.use(function(err,req,res,next){
 
   //Ejs
 
-        const ejs = require('ejs'),        
-            html = ejs.render('<%= err.stack(", "); %>', {err: err});        
-        res.status(500).render("../viewsEjs/layout.ejs",{html});
+  miError.MostrarError("error en el servidor",res);
         
   });

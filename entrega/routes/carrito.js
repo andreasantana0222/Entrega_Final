@@ -1,25 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const carrito = require("../api/carrito");
+const miError = require('../auth/error');
 
 router.get("/carrito/listar", async (req, res) => {
   try {
     let prods = await carrito.read();
 
     if (prods == []) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "no hay productos cargados" }, null, 2) + "\n"
-        );
+      miError.MostrarError("carrito no encontrado",res);
     } else {
       res.type("json").send(JSON.stringify(prods));
     }
   } catch (e) {
-    res
-      .status(500)
-      .send(JSON.stringify({ error: "no hay productos cargados" }));
+    miError.MostrarError("carrito no encontrado",res);
   }
 });
 
@@ -30,17 +24,12 @@ router.get("/carrito/listar/:id", async (req, res) => {
     let buscarCarrito = await carrito.readById(idCarrito);
 
     if (buscarCarrito == null || req.params.id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("carrito no encontrado",res);
     } else {
       res.type("json").send(JSON.stringify(buscarCarrito, null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    miError.MostrarError("carrito no encontrado",res);
   }
 });
 
@@ -55,7 +44,7 @@ router.post("/carrito/agregar", async (req, res) => {
       .type("json")
       .send(JSON.stringify(await carrito.save(objeto), null, 2) + "\n");
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "error al guardar" }));
+    miError.MostrarError("error al guardar",res);
   }
 });
 
@@ -65,12 +54,7 @@ router.put("/carrito/actualizar/:id", async (req, res) => {
     let id = req.params.id;
 
     if (id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("carrito no encontrado",res);
     } else {
       let objeto = req.body;
       return res
@@ -78,7 +62,7 @@ router.put("/carrito/actualizar/:id", async (req, res) => {
         .send(JSON.stringify(await carrito.update(id, objeto), null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    miError.MostrarError("carrito no encontrado",res);
   }
 });
 
@@ -87,42 +71,17 @@ router.delete("/carrito/borrar/:id", async (req, res) => {
   try {
     let id = req.params.id;
     if (id < 1) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "producto no encontrado" }, null, 2) + "\n"
-        );
+      miError.MostrarError("carrito no encontrado",res);
     } else {
       return res
         .type("json")
         .send(JSON.stringify(await carrito.delete(id), null, 2) + "\n");
     }
   } catch (e) {
-    res.status(500).send(JSON.stringify({ error: "producto no encontrado" }));
+    miError.MostrarError("carrito no encontrado",res);
   }
 });
 
-// GET api/productos/vista-------------------------------------------------
-router.get("/carrito/vista", async (req, res) => {
-  try {
-    let prods = await carrito.read();
 
-    if ((prods.length = 0)) {
-      res
-        .status(500)
-        .type("json")
-        .send(
-          JSON.stringify({ error: "no hay productos cargados" }, null, 2) + "\n"
-        );
-    } else {
-      res.render("vista", { hayProductos: true, productos: prods });
-    }
-  } catch (e) {
-    res
-      .status(500)
-      .send(JSON.stringify({ error: "no hay productos cargados" }));
-  }
-});
 
 module.exports = router;

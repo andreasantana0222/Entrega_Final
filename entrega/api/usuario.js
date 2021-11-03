@@ -5,6 +5,8 @@ const auth = require('../auth/auth');
 
 const mail=require('../auth/mail');
 
+
+
 class Usuario {
     constructor() {
       this.listaUsuarios = [];
